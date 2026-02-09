@@ -10,11 +10,11 @@ const PolicyPage = () => {
     const [loading, setLoading] = useState(true);
 
     const defaultCookiesPolicy = `
-        <h2>Cookie Policy for Inktrix</h2>
-        <p>At Inktrix, we believe in being clear and open about how we collect and use data related to you. In the spirit of transparency, this policy provides detailed information about how and when we use cookies on our Website.</p>
+        <h2>Cookie Policy for PrintNexa</h2>
+        <p>At PrintNexa, we believe in being clear and open about how we collect and use data related to you. In the spirit of transparency, this policy provides detailed information about how and when we use cookies on our Website.</p>
         
         <h3>What is a cookie?</h3>
-        <p>A cookie is a small file placed onto your device that enables Inktrix features and functionality. For example, cookies enable us to identify your device, secure your access to our site, and even help us know if someone attempts to access your account from a different device.</p>
+        <p>A cookie is a small file placed onto your device that enables PrintNexa features and functionality. For example, cookies enable us to identify your device, secure your access to our site, and even help us know if someone attempts to access your account from a different device.</p>
         
         <h3>How we use cookies</h3>
         <p>We use cookies to enhance your experience, including keeping you logged in, remembering your cart items, and understanding how you use our site to improve our service.</p>
@@ -42,8 +42,8 @@ const PolicyPage = () => {
                     // Fallback for cookies if not found in DB
                     setPolicy({
                         content: defaultCookiesPolicy,
-                        meta_title: 'Cookie Policy | Inktrix',
-                        meta_description: 'Information about how Inktrix uses cookies on its website.'
+                        meta_title: 'Cookie Policy | PrintNexa',
+                        meta_description: 'Information about how PrintNexa uses cookies on its website.'
                     });
                 } else {
                     setPolicy(null);
@@ -53,8 +53,8 @@ const PolicyPage = () => {
                 if (type === 'cookies') {
                     setPolicy({
                         content: defaultCookiesPolicy,
-                        meta_title: 'Cookie Policy | Inktrix',
-                        meta_description: 'Information about how Inktrix uses cookies on its website.'
+                        meta_title: 'Cookie Policy | PrintNexa',
+                        meta_description: 'Information about how PrintNexa uses cookies on its website.'
                     });
                 } else {
                     setPolicy(null);

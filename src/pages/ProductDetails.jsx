@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import Skeleton from '../components/Skeleton';
 import { 
     Star, ShoppingBag, Heart, ShieldCheck, Truck, 
-    Minus, Plus, ChevronRight, Share2, Zap, RotateCcw,
+    Minus, Plus, ChevronRight, Zap, RotateCcw,
     CheckCircle2, ArrowRight, Award, Globe, ArrowUpRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -143,9 +143,6 @@ const ProductDetails = () => {
                                     className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all border shadow-xl ${activeWishlist ? 'bg-brand-500 border-brand-500 text-white' : 'bg-white border-neutral-100 text-neutral-400 hover:text-brand-600'}`}
                                 >
                                     <Heart size={22} className={activeWishlist ? 'fill-current' : ''} />
-                                </button>
-                                <button className="w-14 h-14 rounded-2xl bg-white border border-neutral-100 flex items-center justify-center text-neutral-400 hover:text-neutral-900 transition-all shadow-xl">
-                                    <Share2 size={22} />
                                 </button>
                             </div>
 

@@ -6,6 +6,7 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
@@ -19,6 +20,7 @@ export const CartProvider = ({ children }) => {
             }
             return [...prev, { ...product, quantity }];
         });
+        setIsCartOpen(true); // Automatically open cart drawer
     };
 
     const removeFromCart = (id) => {
@@ -36,8 +38,21 @@ export const CartProvider = ({ children }) => {
         return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
     };
 
+    const openCart = () => setIsCartOpen(true);
+    const closeCart = () => setIsCartOpen(false);
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, getCartTotal }}>
+        <CartContext.Provider value={{ 
+            cartItems, 
+            addToCart, 
+            removeFromCart, 
+            updateQuantity, 
+            clearCart, 
+            getCartTotal,
+            isCartOpen,
+            openCart,
+            closeCart
+        }}>
             {children}
         </CartContext.Provider>
     );

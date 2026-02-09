@@ -6,7 +6,7 @@ const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' })
     const [seo, setSeo] = useState(null);
     const [favicon, setFavicon] = useState('/logo/fabicon.png');
     const [siteLogo, setSiteLogo] = useState('/logo/logo.png');
-    const domain = 'https://inktrix.shop'; // Default production domain
+    const domain = 'https://PrintNexa.shop'; // Default production domain
     const currentUrl = window.location.href.replace(window.location.origin, domain);
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' })
         }
     }, [favicon]);
 
-    const title = seo?.meta_title || fallbackTitle || 'Inktrix';
+    const title = seo?.meta_title || fallbackTitle || 'PrintNexa';
     const description = seo?.meta_description || fallbackDesc || '';
     const metaImage = image || siteLogo;
 
@@ -78,7 +78,7 @@ const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' })
             <meta property="og:image" content={metaImage} />
             <meta property="og:url" content={currentUrl} />
             <meta property="og:type" content={type} />
-            <meta property="og:site_name" content="Inktrix" />
+            <meta property="og:site_name" content="PrintNexa" />
 
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={description} />

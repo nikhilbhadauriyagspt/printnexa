@@ -1,646 +1,481 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/api';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { FadeIn } from '../components/Reveal';
+import {
+    Zap,
+    ShieldCheck,
+    Truck,
+    Headphones,
+    ArrowRight,
+    Cpu,
+    CheckCircle2,
+    ShoppingBag,
+    Star,
+    ArrowUpRight,
+    BookOpen,
+    Quote,
+    Play,
+    Activity,
+    Droplets,
+    Shield,
+    Settings,
+    Wifi,
+    Heart,
+    Home as HomeIcon,
+    Briefcase,
+    Leaf,
+    RotateCcw,
+    ChevronRight,
+    Globe,
+    Package,
+    Award,
+    Sparkles
+} from 'lucide-react';
 import HeroCinematic from '../components/HeroCinematic';
 import SEO from '../components/SEO';
-import toast from 'react-hot-toast';
 import Skeleton from '../components/Skeleton';
-import {
-    Star, Heart, Truck, ShieldCheck, Mail,
-    ChevronLeft, ChevronRight, Zap, Quote, Sparkles,
-    MoveRight, Headphones, CreditCard, ShoppingBag, Plus, ArrowUpRight, Play, CheckCircle2, ArrowRight
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
     const [blogs, setBlogs] = useState([]);
-    const [activeTab, setActiveTab] = useState('New Arrivals');
-    const [deal, setDeal] = useState(null);
-    const { addToCart } = useCart();
-    const [email, setEmail] = useState('');
-    
-    const [isProductsLoading, setIsProductsLoading] = useState(true);
-    const [isInitialLoading, setIsInitialLoading] = useState(true);
-
-    const scrollRef = useRef(null);
-    const [isHovered, setIsHovered] = useState(false);
-
-    const scroll = (direction) => {
-        const { current } = scrollRef;
-        const scrollAmount = 350;
-        if (direction === 'left') {
-            current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        } else {
-            current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        let interval;
-        if (!isHovered && categories.length > 0) {
-            interval = setInterval(() => {
-                if (scrollRef.current) {
-                    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-                    if (scrollLeft + clientWidth >= scrollWidth - 10) {
-                        scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-                    } else {
-                        scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-                    }
-                }
-            }, 4000);
-        }
-        return () => clearInterval(interval);
-    }, [isHovered, categories]);
-
-    useEffect(() => {
-        const fetchFastData = async () => {
+        const fetchData = async () => {
             try {
-                const [catRes, dealRes, blogRes] = await Promise.all([
+                const [catRes, prodRes, blogRes] = await Promise.all([
                     api.get('/categories'),
-                    api.get('/settings/deal'),
+                    api.get('/products'),
                     api.get('/blogs')
                 ]);
                 setCategories(catRes.data);
-                setDeal(dealRes.data);
-                setBlogs(blogRes.data);
-            } catch (error) {
-                console.error("Error fetching fast data:", error);
-            } finally {
-                setIsInitialLoading(false);
-            }
-        };
-        fetchFastData();
-    }, []);
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const prodRes = await api.get('/products');
                 setProducts(prodRes.data);
+                setBlogs(blogRes.data.slice(0, 3));
             } catch (error) {
-                console.error("Error fetching products:", error);
+                console.error("Error fetching data:", error);
             } finally {
-                setIsProductsLoading(false);
+                setIsLoading(false);
             }
         };
-        fetchProducts();
+        fetchData();
     }, []);
 
-    const getTabProducts = () => {
-        if (activeTab === 'New Arrivals') return [...products].sort((a, b) => b.id - a.id).slice(0, 8);
-        if (activeTab === 'Best Sellers') return products.filter(p => p.is_best_selling).slice(0, 8);
-        if (activeTab === 'On Sale') return products.filter(p => parseFloat(p.mrp) > parseFloat(p.price)).slice(0, 8);
-        return products.slice(0, 8);
-    };
+    const bestSellers = products.filter(p => p.is_best_selling).slice(0, 4);
+    const archiveDeals = products.filter(p => parseFloat(p.mrp) > parseFloat(p.price)).slice(0, 4);
+    const newArrivals = [...products].sort((a, b) => b.id - a.id).slice(0, 8);
 
-    const handleNewsletterSubmit = (e) => {
-        e.preventDefault();
-        if (!email) {
-            toast.error("Please enter your email address.");
-            return;
-        }
-        toast.success("Successfully Subscribed!");
-        setEmail('');
-    };
+    const brands = [
+        { name: 'HP' }, { name: 'Epson' }, { name: 'Canon' },
+        { name: 'Brother' }, { name: 'Xerox' }, { name: 'Lexmark' }
+    ];
 
-    const tabProducts = getTabProducts();
+    // Compliance: Find specific categories for the spotlight section
+    const inkjetCat = categories.find(c => c.slug?.toLowerCase().includes('inkjet') || c.name?.toLowerCase().includes('inkjet'));
+    const laserCat = categories.find(c => c.slug?.toLowerCase().includes('laser') || c.name?.toLowerCase().includes('laser'));
 
     return (
-        <div className="bg-white min-h-screen relative font-sans selection:bg-brand-500 selection:text-white">
-            <SEO pageName="home" fallbackTitle="Home - Inktrix" fallbackDesc="Shop premium technology." />
+        <div className="bg-white min-h-screen relative font-sans selection:bg-brand-600 selection:text-white overflow-hidden">
+            <SEO pageName="home" fallbackTitle="PrintNexa - Printers & Accessories" fallbackDesc="Browse our catalog of professional printers and supplies." />
 
+            {/* 1. HERO SECTION */}
             <HeroCinematic />
 
-            {/* --- SECTION 1: QUICK STATS --- */}
-            <section className="py-12 bg-white border-b border-neutral-100">
+            {/* 2. BRANDS */}
+            <section className="py-16 bg-slate-50 overflow-hidden border-b border-slate-100">
+                <FadeIn>
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full mb-4 shadow-sm">
+                            <Globe size={12} className="text-brand-600" />
+                            <span className="text-brand-600 font-bold uppercase tracking-widest text-[9px]">Available Brands</span>
+                        </div>
+                    </div>
+                </FadeIn>
+                <div className="w-full overflow-hidden group">
+                    <div className="flex w-max animate-[marquee_40s_linear_infinite] group-hover:[animation-play-state:paused]">
+                        <div className="flex items-center">
+                            {[...brands, ...brands, ...brands].map((brand, idx) => (
+                                <div key={`a-${idx}`} className="flex items-center gap-8 md:gap-16 mx-4 md:mx-8 opacity-40 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 whitespace-nowrap">
+                                        {brand.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex items-center">
+                            {[...brands, ...brands, ...brands].map((brand, idx) => (
+                                <div key={`b-${idx}`} className="flex items-center gap-8 md:gap-16 mx-4 md:mx-8 opacity-40 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 whitespace-nowrap">
+                                        {brand.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 3. FEATURES */}
+            <section className="py-20 bg-white border-b border-slate-100">
+                <div className="container mx-auto px-6 text-center lg:text-left">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <FadeIn delay={0.1}><FeatureCard icon={<Wifi size={24} />} title="Connectivity" desc="Supports Wi-Fi and Ethernet connections for network integration." /></FadeIn>
+                        <FadeIn delay={0.2}><FeatureCard icon={<Zap size={24} />} title="Resolution" desc="High-resolution output suitable for text and graphics." /></FadeIn>
+                        <FadeIn delay={0.3}><FeatureCard icon={<Cpu size={24} />} title="Efficiency" desc="Designed for consistent throughput in busy environments." /></FadeIn>
+                        <FadeIn delay={0.4}><FeatureCard icon={<Settings size={24} />} title="Compatibility" desc="Compatible with major operating systems and standard protocols." /></FadeIn>
+                    </div>
+                </div>
+            </section>
+
+            {/* 4. PRODUCT CATEGORIES */}
+            <section className="py-24 bg-slate-50/50">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="flex flex-col items-center text-center">
-                            <span className="text-3xl font-serif text-neutral-900 mb-1 tracking-tighter">5k+</span>
-                            <span className="text-[10px] font-black text-brand-600 uppercase tracking-widest">Active Clients</span>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                            <span className="text-3xl font-serif text-neutral-900 mb-1 tracking-tighter">99.9%</span>
-                            <span className="text-[10px] font-black text-brand-600 uppercase tracking-widest">Uptime Guarantee</span>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                            <span className="text-3xl font-serif text-neutral-900 mb-1 tracking-tighter">24h</span>
-                            <span className="text-[10px] font-black text-brand-600 uppercase tracking-widest">Global Support</span>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                            <span className="text-3xl font-serif text-neutral-900 mb-1 tracking-tighter">0%</span>
-                            <span className="text-[10px] font-black text-brand-600 uppercase tracking-widest">Interest EMI</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* --- SECTION 2: CURATED SELECTION (Seasonal Essentials) --- */}
-            <section className="py-24 bg-white relative">
-                <div className="container mx-auto px-6">
-                    <div className="flex flex-col lg:flex-row justify-between items-start mb-20 gap-12">
-                        <div className="max-w-xl">
-                            <p className="text-brand-600 font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Curated Gear</p>
-                            <h2 className="text-5xl md:text-7xl font-serif font-medium text-neutral-900 leading-[0.85] tracking-tight mb-8">
-                                Seasonal <br/><span className="italic text-brand-500">Essentials.</span>
-                            </h2>
-                        </div>
-
-                        <div className="flex flex-col items-end gap-8 self-end">
-                            <div className="flex p-1 bg-neutral-50 rounded-full border border-neutral-200">
-                                {['New Arrivals', 'Best Sellers', 'On Sale'].map(tab => (
-                                    <button
-                                        key={tab}
-                                        onClick={() => setActiveTab(tab)}
-                                        className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${activeTab === tab
-                                            ? 'bg-brand-600 text-white shadow-xl scale-105 gold-shadow'
-                                            : 'text-neutral-400 hover:text-neutral-600'
-                                            }`}
-                                    >
-                                        {tab}
-                                    </button>
-                                ))}
+                    <FadeIn>
+                        <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+                            <div>
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-50 border border-brand-100 rounded-full mb-4 shadow-sm">
+                                    <Package size={12} className="text-brand-600" />
+                                    <span className="text-brand-600 font-bold uppercase tracking-widest text-[9px]">Printer Catalog</span>
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight text-center md:text-left uppercase">
+                                    Browse <span className="text-brand-600">Categories</span>
+                                </h2>
                             </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {isProductsLoading ? (
-                             Array(8).fill(0).map((_, i) => <Skeleton key={i} className="h-96 rounded-3xl" />)
-                        ) : (
-                            tabProducts.map(product => (
-                                <ProductCard key={product.id} product={product} />
-                            ))
-                        )}
-                    </div>
-                </div>
-            </section>
-
-            {/* --- SECTION 3: CATEGORY SLIDER (Discovery Hub) --- */}
-            <section className="py-24 bg-neutral-900 overflow-hidden relative">
-                <div className="container mx-auto px-6 relative z-10">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div className="max-w-xl">
-                             <p className="text-brand-400 font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Discovery Hub</p>
-                             <h2 className="text-4xl md:text-6xl font-serif text-white leading-tight tracking-tight">Browse Our <span className="italic text-brand-400">Ecosystems.</span></h2>
-                        </div>
-                        <div className="flex items-center gap-4 mb-2">
-                            <button 
-                                onClick={() => scroll('left')}
-                                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:bg-brand-500 hover:text-white hover:border-brand-500 transition-all shadow-sm"
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-                            <button 
-                                onClick={() => scroll('right')}
-                                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:bg-brand-500 hover:text-white hover:border-brand-500 transition-all shadow-sm"
-                            >
-                                <ChevronRight size={20} />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div 
-                        ref={scrollRef}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                        className="flex overflow-x-auto gap-5 pb-12 no-scrollbar snap-x snap-mandatory"
-                    >
-                        {isInitialLoading ? (
-                            Array(6).fill(0).map((_, i) => (
-                                <div key={i} className="snap-start flex-shrink-0" style={{ width: 'calc((100% - 80px) / 5.5)' }}>
-                                    <Skeleton className="h-full aspect-[4/5] rounded-[2.5rem] bg-white/5" />
-                                </div>
-                            ))
-                        ) : (
-                            categories.map((cat, i) => (
-                                <motion.div
-                                    key={cat.id}
-                                    whileHover={{ y: -8 }}
-                                    className="snap-start flex-shrink-0"
-                                    style={{ width: 'calc((100% - 80px) / 5.5)' }}
-                                >
-                                    <Link 
-                                        to={`/products?category=${cat.slug}`}
-                                        className="group relative aspect-[4/5] w-full rounded-[3rem] overflow-hidden bg-white/5 border border-white/10 hover:border-brand-500 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-500/10 block"
-                                    >
-                                        <div className="absolute inset-0 p-8 flex flex-col justify-between z-20">
-                                            <div className="w-12 h-12 rounded-2xl bg-black/40 backdrop-blur shadow-sm flex items-center justify-center text-white/40 group-hover:bg-brand-600 group-hover:text-white transition-all duration-500">
-                                                <ArrowUpRight size={20} />
-                                            </div>
-                                            <div>
-                                                <p className="text-white font-bold text-2xl leading-tight mb-2 tracking-tight">{cat.name}</p>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-4 h-[1px] bg-brand-400"></span>
-                                                    <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em]">Explore Gear</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                        <img 
-                                            src={cat.image?.startsWith('http') ? cat.image : `/category/${cat.image}`} 
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100"
-                                            alt={cat.name}
-                                        />
-                                    </Link>
-                                </motion.div>
-                            ))
-                        )}
-                    </div>
-                </div>
-            </section>
-
-            {/* --- SECTION 4: PRO SERIES SPOTLIGHT --- */}
-            <section className="py-24 bg-white relative overflow-hidden">
-                <div className="container mx-auto px-6 relative z-10">
-                    <div className="bg-neutral-900 rounded-[4rem] border border-white/5 p-8 md:p-20 flex flex-col lg:flex-row items-center gap-16 backdrop-blur-xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-[120px] -mr-64 -mt-64"></div>
-                        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-600/10 rounded-full blur-[80px] -ml-32 -mb-32"></div>
-
-                        <div className="lg:w-1/2 relative z-10">
-                            <span className="text-brand-500 font-black text-[10px] uppercase tracking-[0.4em] mb-6 block">Elite Collection 2026</span>
-                            <h2 className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-8 tracking-tight">Precision in <br/><span className="italic text-brand-400">Every Pixel.</span></h2>
-                            <p className="text-white/50 text-lg leading-relaxed mb-12 max-w-lg font-light">
-                                Experience the future of enterprise printing. The LaserCore Pro series combines artisanal aesthetics with pure, uncompromising performance.
-                            </p>
-                            
-                            <div className="grid grid-cols-2 gap-8 mb-12">
-                                <div className="flex items-start gap-4 group/item">
-                                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-brand-500 group-hover/item:bg-brand-500 group-hover/item:text-white transition-all duration-500">
-                                        <Zap size={22} />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-white font-bold text-sm mb-1">Ultra Speed</h4>
-                                        <p className="text-white/30 text-[9px] uppercase font-black tracking-widest">120 Pages Per Minute</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4 group/item">
-                                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-brand-500 group-hover/item:bg-brand-500 group-hover/item:text-white transition-all duration-500">
-                                        <Sparkles size={22} />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-white font-bold text-sm mb-1">Color Logic</h4>
-                                        <p className="text-white/30 text-[9px] uppercase font-black tracking-widest">99.9% Color Accuracy</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <Link to="/products" className="inline-flex items-center gap-4 px-10 py-5 bg-brand-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white hover:text-neutral-900 transition-all gold-shadow group">
-                                Explore Pro Series <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+                            <Link to="/products" className="text-sm font-semibold text-slate-400 hover:text-brand-600 flex items-center gap-2 group transition-colors">
+                                View Full Catalog <ArrowRight size={16} />
                             </Link>
                         </div>
-
-                        <div className="lg:w-1/2 relative group">
-                            <div className="absolute -top-10 -right-10 bg-white/10 backdrop-blur-xl border border-white/10 p-6 rounded-3xl z-20 hidden md:block animate-bounce duration-[3000ms]">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white">
-                                        <CheckCircle2 size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-white font-bold text-xs">Quality Certified</p>
-                                        <p className="text-white/40 text-[9px] uppercase tracking-widest">Enterprise Grade</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="relative">
-                                <div className="absolute inset-0 bg-brand-500/20 rounded-full blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-                                <img 
-                                    src="/products/image_1.png" 
-                                    className="relative z-10 w-full h-auto object-contain transform group-hover:scale-110 transition-transform duration-1000 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-                                    alt="Pro Series Spotlight"
-                                />
-                            </div>
-                        </div>
+                    </FadeIn>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {isLoading ? (
+                            [1, 2, 3, 4].map(i => <Skeleton key={i} className="h-80 rounded-[2.5rem]" />)
+                        ) : (
+                            categories.slice(0, 8).map((cat, idx) => (
+                                <FadeIn key={cat.id} delay={idx * 0.1}>
+                                    <Link to={`/products?category=${cat.slug}`} className="group block bg-white rounded-[2.5rem] p-8 h-full hover:shadow-xl hover:shadow-brand-100/50 border border-slate-100 transition-all duration-500 text-center">
+                                        <div className="aspect-square rounded-[2rem] overflow-hidden bg-slate-50 mb-8 relative">
+                                            <img src={`/category/${cat.image}`} className="w-full h-full object-contain p-6 grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110" alt={cat.name} />
+                                            <div className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border border-slate-100 shadow-sm"><ArrowUpRight size={18} /></div>
+                                        </div>
+                                        <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight mb-1">{cat.name}</h3>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">View Products</p>
+                                    </Link>
+                                </FadeIn>
+                            ))
+                        )}
                     </div>
                 </div>
             </section>
 
-            {/* --- SECTION 5: TRENDING SPOTLIGHT --- */}
-            <section className="py-24 bg-neutral-50">
+            {/* 5. CURATED COLLECTION */}
+            <section className="py-24 bg-white">
                 <div className="container mx-auto px-6">
-                    <div className="flex justify-between items-end mb-16">
-                         <h2 className="text-5xl md:text-6xl font-serif text-neutral-900 tracking-tight">Trending <span className="italic text-brand-500">Spotlight</span></h2>
-                         <Link to="/products" className="text-xs font-black uppercase tracking-widest text-brand-600 hover:text-neutral-900 transition-colors mb-2">See All Trending Gear</Link>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {isProductsLoading ? (
-                            Array(2).fill(0).map((_, i) => <Skeleton key={i} className="h-96 rounded-3xl" />)
+                    <FadeIn>
+                        <div className="flex justify-between items-end mb-12">
+                            <div>
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-50 border border-brand-100 rounded-full mb-4 shadow-sm">
+                                    <Zap size={12} className="text-brand-600" />
+                                    <span className="text-brand-600 font-bold uppercase tracking-widest text-[9px]">Curated</span>
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 uppercase tracking-tight">Office <span className="text-brand-600">Essentials</span></h2>
+                            </div>
+                            <Link to="/products" className="hidden md:flex text-sm font-bold uppercase tracking-widest text-slate-900 hover:text-brand-600 transition-colors items-center gap-2">View Collection <ArrowRight size={16} /></Link>
+                        </div>
+                    </FadeIn>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-6 h-auto md:h-[600px]">
+                        {isLoading ? (
+                            <>
+                                <div className="md:col-span-2 md:row-span-2"><Skeleton className="h-full rounded-[2.5rem]" /></div>
+                                <Skeleton className="h-full rounded-[2.5rem]" />
+                                <Skeleton className="h-full rounded-[2.5rem]" />
+                            </>
                         ) : (
-                            products.filter(p => p.is_best_selling).slice(0, 2).map((product) => (
-                                <Link to={`/product/${product.slug}`} key={product.id} className="group relative h-[450px] rounded-[3.5rem] overflow-hidden bg-white flex items-center p-12 hover:shadow-2xl transition-all duration-700 border border-neutral-100">
-                                    <div className="w-1/2 relative z-10">
-                                        <span className="inline-block px-3 py-1 bg-brand-600 text-white text-[9px] font-bold uppercase tracking-widest rounded-lg mb-6">Flagship</span>
-                                        <h3 className="text-3xl font-serif text-neutral-900 mb-4 group-hover:text-brand-600 transition-colors leading-tight">{product.name}</h3>
-                                        <p className="text-2xl font-black text-neutral-900 mb-10 tracking-tighter">${product.price}</p>
-                                        <div className="w-12 h-12 rounded-2xl border border-neutral-200 flex items-center justify-center text-neutral-300 group-hover:bg-neutral-900 group-hover:border-neutral-900 group-hover:text-white transition-all">
-                                            <ArrowUpRight size={20}/>
+                            <>
+                                {products[0] && (
+                                    <div className="md:col-span-2 md:row-span-2 bg-slate-50 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group border border-slate-100 hover:border-brand-200 transition-colors">
+                                        <div className="absolute top-0 right-0 w-2/3 h-full bg-white rounded-l-[100px] -mr-20 z-0 group-hover:bg-brand-50/30 transition-colors duration-500"></div>
+                                        <div className="relative z-10 h-full flex flex-col justify-between items-start">
+                                            <div>
+                                                <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 inline-block">Featured</span>
+                                                <h3 className="text-2xl md:text-3xl font-black uppercase text-slate-900 mb-2 line-clamp-2">{products[0].name}</h3>
+                                                <p className="text-slate-500 text-sm font-medium max-w-xs leading-relaxed line-clamp-2">{products[0].description}</p>
+                                            </div>
+                                            <Link to={`/product/${products[0].slug}`} className="mt-8 flex items-center gap-3 text-xs font-black uppercase tracking-widest text-slate-900 hover:text-brand-600 transition-colors">Shop Now <ArrowUpRight size={14} /></Link>
                                         </div>
-                                    </div>
-                                    <div className="w-1/2 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-1000">
                                         <img
-                                            src={product.image_url?.startsWith('http') ? product.image_url : `/products/${product.image_url}`}
-                                            alt={product.name}
-                                            className="max-w-full max-h-[300px] object-contain mix-blend-multiply"
+                                            className="absolute bottom-10 right-0 w-1/2 h-1/2 object-contain mix-blend-multiply translate-x-12 translate-y-12 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-700"
+                                            src={products[0].image_url?.startsWith('http') ? products[0].image_url : `/products/${products[0].image_url}`}
+                                            alt={products[0].name}
                                         />
                                     </div>
-                                </Link>
-                            ))
+                                )}
+
+                                {products[1] && (
+                                    <FadeIn delay={0.2} className="h-full">
+                                        <Link to={`/product/${products[1].slug}`} className="bg-white rounded-[2.5rem] p-8 border border-slate-100 hover:border-brand-200 transition-colors h-full flex flex-col justify-center relative group overflow-hidden block">
+                                            <h4 className="text-xl font-bold uppercase text-slate-900 relative z-10 line-clamp-2">{products[1].name}</h4>
+                                            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-4 relative z-10">{products[1].category_name || 'Electronics'}</p>
+                                            <img 
+                                                src={products[1].image_url?.startsWith('http') ? products[1].image_url : `/products/${products[1].image_url}`} 
+                                                className="absolute bottom-4 right-4 w-32 h-32 object-contain group-hover:scale-110 transition-transform duration-500" 
+                                                alt={products[1].name} 
+                                            />
+                                        </Link>
+                                    </FadeIn>
+                                )}
+
+                                {products[2] && (
+                                    <FadeIn delay={0.3} className="h-full">
+                                        <Link to={`/product/${products[2].slug}`} className="bg-slate-900 rounded-[2.5rem] p-8 border border-slate-800 hover:border-brand-900 transition-colors h-full flex flex-col justify-center relative group overflow-hidden block">
+                                            <h4 className="text-xl font-bold uppercase text-white relative z-10 line-clamp-2">{products[2].name}</h4>
+                                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4 relative z-10">{products[2].category_name || 'Accessories'}</p>
+                                            <img 
+                                                src={products[2].image_url?.startsWith('http') ? products[2].image_url : `/products/${products[2].image_url}`} 
+                                                className="absolute bottom-4 right-4 w-32 h-32 object-contain group-hover:scale-110 transition-transform duration-500" 
+                                                alt={products[2].name} 
+                                            />
+                                        </Link>
+                                    </FadeIn>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>
             </section>
 
-            {/* --- SECTION 6: THE ATELIER STORY --- */}
-            <section className="py-24 bg-white overflow-hidden">
+
+            {/* 7. NEW ARRIVALS */}
+            <section className="py-24 bg-slate-50/50">
                 <div className="container mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-24 items-center">
-                        <div className="relative order-2 lg:order-1">
-                             <div className="aspect-[4/5] rounded-[4rem] overflow-hidden border-8 border-white shadow-2xl relative z-10">
-                                <img src="/home/middle-bg.jpg" className="w-full h-full object-cover" alt="Atelier" />
-                             </div>
-                             <div className="absolute -top-10 -left-10 w-40 h-40 bg-brand-500 rounded-full blur-[80px] opacity-20 animate-pulse"></div>
-                             <div className="absolute -bottom-12 -right-12 p-10 bg-neutral-900 text-white rounded-[2rem] shadow-2xl z-20 hidden md:block max-w-xs">
-                                <Quote className="text-brand-500 mb-4" size={32} />
-                                <p className="font-serif italic text-lg opacity-80 leading-relaxed">"True technology doesn't just work; it inspires."</p>
-                             </div>
-                        </div>
-                        <div className="order-1 lg:order-2">
-                            <span className="text-brand-600 font-bold uppercase tracking-[0.4em] text-[10px] mb-8 block">Our Philosophy</span>
-                            <h2 className="text-5xl md:text-7xl font-serif text-neutral-900 leading-tight mb-8 tracking-tight">Engineering a <br/><span className="text-brand-500 italic">Sharper Future.</span></h2>
-                            <p className="text-neutral-500 text-lg leading-relaxed mb-12 font-light">
-                                At Inktrix, we believe hardware should be invisible, letting your creativity take center stage. Every device in our collection is hand-selected for precision and longevity.
-                            </p>
-                            <div className="grid grid-cols-2 gap-12 pt-12 border-t border-neutral-100">
-                                <div>
-                                    <p className="text-5xl font-serif text-neutral-900 mb-2 tracking-tighter">99%</p>
-                                    <p className="text-neutral-400 text-[10px] font-bold uppercase tracking-widest">Color Accuracy</p>
+                    <FadeIn>
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+                            <div>
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-50 border border-brand-100 rounded-full mb-4 shadow-sm">
+                                    <Sparkles size={12} className="text-brand-600" />
+                                    <span className="text-brand-600 font-bold uppercase tracking-widest text-[9px]">New Products</span>
                                 </div>
-                                <div>
-                                    <p className="text-5xl font-serif text-neutral-900 mb-2 tracking-tighter">24h</p>
-                                    <p className="text-neutral-400 text-[10px] font-bold uppercase tracking-widest">Global Support</p>
-                                </div>
+                                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] uppercase text-center md:text-left uppercase">Latest <br /><span className="text-brand-600">Arrivals</span></h2>
                             </div>
+                            <Link to="/products" className="px-10 py-5 bg-[#0f172a] text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-brand-600 transition-all border border-slate-800">Explore Store</Link>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* --- SECTION 7: EDITORIAL JOURNAL (BLOGS) --- */}
-            <section className="py-24 bg-neutral-50">
-                <div className="container mx-auto px-6">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div className="max-w-xl">
-                             <p className="text-brand-600 font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Editorial Journal</p>
-                             <h2 className="text-5xl md:text-6xl font-serif text-neutral-900 leading-tight tracking-tight">The Future of <br/><span className="italic text-brand-500">Tech Insights.</span></h2>
-                        </div>
-                        <Link to="/blogs" className="text-xs font-black uppercase tracking-widest text-neutral-400 hover:text-brand-600 transition-colors flex items-center gap-2 mb-2">Read Full Journal <ArrowRight size={14}/></Link>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {isInitialLoading ? (
-                             Array(3).fill(0).map((_, i) => <Skeleton key={i} className="h-[450px] rounded-[3rem]" />)
+                    </FadeIn>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {isLoading ? (
+                            [1, 2, 3, 4].map(i => <Skeleton key={i} className="aspect-[4/5] rounded-[3rem]" />)
                         ) : (
-                            blogs.slice(0, 3).map((blog) => (
-                                <Link key={blog.id} to={`/blog/${blog.slug}`} className="group flex flex-col bg-white rounded-[3rem] overflow-hidden border border-neutral-100 hover:shadow-2xl transition-all duration-500">
-                                    <div className="aspect-[16/10] overflow-hidden relative">
-                                        <img 
-                                            src={blog.image_url?.startsWith('http') ? blog.image_url : `/blogs/${blog.image_url}`} 
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                            alt={blog.title}
-                                        />
-                                        <div className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur-md rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-900">
-                                            Insight
-                                        </div>
-                                    </div>
-                                    <div className="p-10 flex flex-col flex-1">
-                                        <p className="text-[10px] font-black text-brand-600 uppercase tracking-widest mb-4">
-                                            {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                                        </p>
-                                        <h3 className="text-2xl font-serif text-neutral-900 mb-6 group-hover:text-brand-600 transition-colors leading-tight line-clamp-2">
-                                            {blog.title}
-                                        </h3>
-                                        <div className="mt-auto flex items-center gap-2 text-neutral-400 font-black text-[10px] uppercase tracking-widest group-hover:text-neutral-900 transition-colors">
-                                            Read Article <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                                        </div>
-                                    </div>
-                                </Link>
+                            newArrivals.map((product, idx) => (
+                                <FadeIn key={product.id} delay={idx * 0.05}>
+                                    <PremiumProductCard product={product} />
+                                </FadeIn>
                             ))
                         )}
                     </div>
                 </div>
             </section>
 
-            {/* --- SECTION 8: WHY CHOOSE US --- */}
-            <section className="py-24 bg-white border-t border-neutral-100">
+            {/* 8. WORK & CREATIVE - Dynamic Categories */}
+            <section className="py-24 bg-white">
                 <div className="container mx-auto px-6">
-                    <div className="grid md:grid-cols-3 gap-16">
-                        <BenefitCard
-                            icon={<ShieldCheck size={28} />}
-                            title="Authentic Sourcing"
-                            desc="Direct partnerships with global manufacturers ensure 100% genuine hardware."
-                        />
-                        <BenefitCard
-                            icon={<Truck size={28} />}
-                            title="Secured Logistics"
-                            desc="Specialized handling and global express shipping for high-value equipment."
-                        />
-                        <BenefitCard
-                            icon={<Headphones size={28} />}
-                            title="Priority Concierge"
-                            desc="24/7 technical assistance for all premium members and enterprise partners."
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* --- SECTION 9: TESTIMONIALS (Premium Wall) --- */}
-            <section className="py-24 bg-neutral-50 overflow-hidden">
-                <div className="container mx-auto px-6">
-                    <div className="text-center max-w-2xl mx-auto mb-20">
-                        <p className="text-brand-600 font-black text-[10px] uppercase tracking-[0.4em] mb-4">Client Feedback</p>
-                        <h2 className="text-4xl md:text-6xl font-serif text-neutral-900 tracking-tight">Voices of <span className="italic text-brand-500">Excellence.</span></h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[
-                            { name: "Alexander Wright", role: "CEO, TechFlow", text: "The precision of their Laser Pro series is unmatched. It's not just a printer; it's a centerpiece of our office efficiency." },
-                            { name: "Sarah Jenkins", role: "Studio Director", text: "Exceptional color accuracy. As a design studio, we require perfection, and Inktrix delivers every single time." },
-                            { name: "Michael Chen", role: "Operations Lead", text: "The priority support is what sets them apart. Any issue is resolved within hours, keeping our workflow seamless." }
-                        ].map((t, i) => (
-                            <div key={i} className="bg-white p-10 rounded-[3rem] border border-neutral-100 shadow-sm hover:shadow-2xl transition-all duration-500 group">
-                                <Quote className="text-brand-500/20 group-hover:text-brand-500 transition-colors mb-8" size={40} />
-                                <p className="text-neutral-600 text-lg leading-relaxed mb-8 font-light italic">"{t.text}"</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center text-brand-600 font-bold">
-                                        {t.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <h4 className="text-neutral-900 font-bold text-sm">{t.name}</h4>
-                                        <p className="text-neutral-400 text-[10px] font-black uppercase tracking-widest">{t.role}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Inkjet / Home Focus */}
+                        <FadeIn delay={0.1}>
+                            <div className="relative h-[550px] rounded-[3rem] overflow-hidden group border border-slate-100 shadow-sm">
+                                <img src={inkjetCat?.image ? `/category/${inkjetCat.image}` : "/category/Inkjet.jpg"} className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110" alt={inkjetCat?.name || "Inkjet"} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-10 md:p-16">
+                                    <div className="backdrop-blur-md bg-white/10 border border-white/10 p-8 rounded-[2rem] w-fit shadow-2xl">
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center text-white">
+                                                <HomeIcon size={24} />
+                                            </div>
+                                            <h3 className="text-2xl font-bold text-white uppercase">{inkjetCat?.name || "Inkjet Series"}</h3>
+                                        </div>
+                                        <p className="text-slate-300 text-sm font-medium mb-8 max-w-xs leading-relaxed">High-resolution inkjet systems designed for detailed document and photo reproduction.</p>
+                                        <Link to={inkjetCat ? `/products?category=${inkjetCat.slug}` : "/products"} className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest hover:text-brand-500 transition-colors group/btn">
+                                            Explore Collection <ArrowRight size={16} className="group-hover/btn:translate-x-2 transition-transform" />
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        </FadeIn>
+
+                        {/* Laser / Business Focus */}
+                        <FadeIn delay={0.2}>
+                            <div className="relative h-[550px] rounded-[3rem] overflow-hidden group border border-slate-100 shadow-sm">
+                                <img src={laserCat?.image ? `/category/${laserCat.image}` : "/category/Laser.jpg"} className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110" alt={laserCat?.name || "Laser"} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-10 md:p-16">
+                                    <div className="backdrop-blur-md bg-white/10 border border-white/10 p-8 rounded-[2rem] w-fit shadow-2xl">
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900">
+                                                <Briefcase size={24} />
+                                            </div>
+                                            <h3 className="text-2xl font-bold text-white uppercase">{laserCat?.name || "Laser Series"}</h3>
+                                        </div>
+                                        <p className="text-slate-300 text-sm font-medium mb-8 max-w-xs leading-relaxed">Laser technology engineered for consistent performance and document management efficiency.</p>
+                                        <Link to={laserCat ? `/products?category=${laserCat.slug}` : "/products"} className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest hover:text-brand-500 transition-colors group/btn">
+                                            View Products <ArrowRight size={16} className="group-hover/btn:translate-x-2 transition-transform" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </FadeIn>
                     </div>
                 </div>
             </section>
 
-            {/* --- SECTION 10: NEWSLETTER --- */}
-            <section className="container mx-auto px-6 py-24">
-                <div className="relative rounded-[5rem] bg-neutral-900 overflow-hidden px-8 py-24 text-center">
-                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[120px]"></div>
-                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-500/5 rounded-full blur-[80px]"></div>
-
-                    <div className="relative z-10 max-w-2xl mx-auto">
-                        <Mail size={40} className="text-brand-500 mx-auto mb-10" />
-                        <h2 className="text-5xl md:text-7xl font-serif text-white leading-tight mb-10 tracking-tight">
-                            Stay in the <span className="italic text-brand-400">Loop.</span>
-                        </h2>
-                        <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                            <input
-                                type="email"
-                                placeholder="Professional email address"
-                                className="flex-1 px-8 py-6 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/20 focus:outline-none focus:border-brand-500 transition-all font-medium"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                            <button type="submit" className="px-10 py-6 bg-brand-600 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-neutral-900 transition-all gold-shadow">
-                                Join
-                            </button>
-                        </form>
+            {/* 9. POPULAR MODELS */}
+            <section className="py-24 bg-slate-900 relative">
+                <div className="container mx-auto px-6 relative z-10">
+                    <FadeIn>
+                        <div className=" mb-20">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/10 rounded-full mb-4 shadow-sm">
+                                <CheckCircle2 size={12} className="text-brand-500" />
+                                <span className="text-brand-500 font-bold uppercase tracking-widest text-[9px]">Catalog Selection</span>
+                            </div>
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white uppercase leading-none text-center md:text-left">Popular <span className="text-brand-600">Models</span></h2>
+                        </div>
+                    </FadeIn>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {isLoading ? (
+                            [1, 2, 3, 4].map(i => <Skeleton key={i} className="aspect-[4/5] rounded-[3rem] bg-white/5" />)
+                        ) : (
+                            bestSellers.map((product, idx) => (
+                                <FadeIn key={product.id} delay={idx * 0.05} fullWidth>
+                                    <PremiumProductCard product={product} dark />
+                                </FadeIn>
+                            ))
+                        )}
                     </div>
+                </div>
+            </section>
+
+            {/* 10. SUSTAINABILITY */}
+            <section className="py-24 bg-slate-50 border-t border-slate-200">
+                <div className="container mx-auto px-6">
+                    <FadeIn>
+                        <div className="text-center mb-16">
+                            <div className="flex justify-center mb-6">
+                                <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 rotate-12 group-hover:rotate-0 transition-transform shadow-sm">
+                                    <Leaf size={32} />
+                                </div>
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight uppercase">Sustainability <span className="text-emerald-600">Commitment</span></h2>
+                            <p className="text-slate-500 max-w-2xl mx-auto font-medium text-sm leading-relaxed">Supporting energy-efficient technology and programs designed to reduce environmental impact across the printing lifecycle.</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8  mx-auto">
+                            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+                                <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-500 mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                                    <Zap size={24} />
+                                </div>
+                                <h4 className="text-lg font-bold text-slate-900 mb-3 uppercase tracking-tight">Energy Efficient</h4>
+                                <p className="text-xs text-slate-500 leading-relaxed font-medium">Features including auto-off settings and low-wattage standby modes to help manage power consumption.</p>
+                            </div>
+                            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+                                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                    <Droplets size={24} />
+                                </div>
+                                <h4 className="text-lg font-bold text-slate-900 mb-3 uppercase tracking-tight">High Yield</h4>
+                                <p className="text-xs text-slate-500 leading-relaxed font-medium">High-capacity ink and toner systems designed to provide more prints per unit, reducing material waste.</p>
+                            </div>
+                            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+                                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                                    <RotateCcw size={24} />
+                                </div>
+                                <h4 className="text-lg font-bold text-slate-900 mb-3 uppercase tracking-tight">Recyclable</h4>
+                                <p className="text-xs text-slate-500 leading-relaxed font-medium">Compatible with manufacturer-led recycling initiatives for used cartridges and hardware components.</p>
+                            </div>
+                        </div>
+                    </FadeIn>
+                </div>
+            </section>
+
+            {/* 11. TRUST BAR */}
+            <section className="py-12 bg-white border-t border-slate-200">
+                <div className="container mx-auto px-6">
+                    <FadeIn>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+                            <TrustItem icon={<CheckCircle2 size={24} />} title="Authentic Items" sub="Sourced from manufacturers" />
+                            <TrustItem icon={<ShieldCheck size={24} />} title="Secure Payment" sub="Encrypted transaction process" />
+                            <TrustItem icon={<Shield size={24} />} title="Manufacturer Warranty" sub="Standard coverage included" />
+                            <TrustItem icon={<Headphones size={24} />} title="Product Support" sub="Technical assistance available" />
+                        </div>
+                    </FadeIn>
                 </div>
             </section>
         </div>
     );
 };
 
-const ProductCard = ({ product }) => {
+// --- HELPERS ---
+
+const FeatureCard = ({ icon, title, desc, delay }) => (
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.5 }}
+        className="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-slate-200 transition-all group h-full shadow-sm">
+        <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-brand-50 group-hover:text-brand-600 transition-all mb-6 shadow-inner">{icon}</div>
+        <h3 className="text-lg font-bold uppercase tracking-tight text-slate-900 mb-2">{title}</h3>
+        <p className="text-slate-500 text-xs leading-relaxed font-medium">{desc}</p>
+    </motion.div>
+);
+
+const PremiumProductCard = ({ product, dark, horizontal }) => {
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist } = useWishlist();
-    const navigate = useNavigate();
     const [isAdded, setIsAdded] = useState(false);
     const activeWishlist = isInWishlist(product.id);
     const imageUrl = product.image_url?.startsWith('http') ? product.image_url : `/products/${product.image_url}`;
 
     const handleAddToCart = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        addToCart(product);
-        setIsAdded(true);
+        e.preventDefault(); e.stopPropagation();
+        addToCart(product); setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
     };
 
-    const handleBuyNow = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        addToCart(product);
-        navigate('/checkout');
-    };
+    if (horizontal) {
+        return (
+            <div className="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm flex items-center gap-6 group hover:border-slate-200 transition-all">
+                <div className="w-32 h-32 bg-slate-50 rounded-[1.5rem] overflow-hidden p-4 shrink-0"><img src={imageUrl} alt={product.name} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" /></div>
+                <div className="flex-1">
+                    <h4 className="text-sm font-bold uppercase tracking-tight text-slate-900 mb-1 line-clamp-1">{product.name}</h4>
+                    <div className="flex items-center gap-3 mb-4"><span className="text-lg font-bold italic text-brand-600">${product.price}</span></div>
+                    <button onClick={handleAddToCart} className="text-[9px] font-bold uppercase tracking-widest text-brand-600 hover:text-brand-700 flex items-center gap-2">{isAdded ? "ADDED" : "ADD TO CART"} <ArrowUpRight size={14} /></button>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <motion.div 
-            whileHover={{ y: -10 }}
-            className="group flex flex-col bg-white rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] border border-neutral-100 relative"
-        >
-            {/* Image Container */}
-            <div className="relative aspect-[4/5] bg-neutral-50/50 flex items-center justify-center overflow-hidden m-2 rounded-[2rem]">
-                <Link to={`/product/${product.slug}`} className="w-full h-full flex items-center justify-center p-10 transform group-hover:scale-110 transition-transform duration-700 ease-out">
-                    <img
-                        src={imageUrl}
-                        alt={product.name}
-                        className="w-full h-full object-contain mix-blend-multiply"
-                    />
-                </Link>
-                
-                {/* Floating Actions */}
-                <div className="absolute top-4 right-4 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
-                    <button
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product); }}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-lg ${activeWishlist ? 'bg-brand-500 text-white' : 'bg-white text-neutral-400 hover:text-brand-600'}`}
-                    >
-                        <Heart size={16} fill={activeWishlist ? 'currentColor' : 'none'} />
-                    </button>
-                    <button
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/product/${product.slug}`); }}
-                        className="w-10 h-10 rounded-full bg-white text-neutral-400 hover:text-brand-600 flex items-center justify-center transition-all shadow-lg"
-                    >
-                        <Plus size={18} />
-                    </button>
+        <motion.div whileHover={{ y: -10 }} className={`group relative flex flex-col ${dark ? 'text-white' : 'text-slate-900'}`}>
+            <div className={`relative aspect-[4/5] ${dark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-100'} border rounded-[3rem] overflow-hidden m-1 p-8 flex items-center justify-center transition-all duration-700`}>
+                {parseFloat(product.mrp) > parseFloat(product.price) && <span className="absolute top-6 left-6 px-3 py-1 bg-rose-600 text-white text-[9px] font-bold uppercase tracking-widest rounded-lg z-10 shadow-lg">Special</span>}
+                <Link to={`/product/${product.slug}`} className="w-full h-full flex items-center justify-center relative z-0"><img src={imageUrl} alt={product.name} className="w-full h-full object-contain mix-blend-multiply transition-transform duration-[2000ms] group-hover:scale-110" /></Link>
+                <div className="absolute top-6 right-6 flex flex-col gap-3 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 z-10">
+                    <button onClick={(e) => { e.preventDefault(); toggleWishlist(product); }} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all border border-slate-100 bg-white ${activeWishlist ? 'text-brand-500' : 'text-neutral-400 hover:text-brand-600'} shadow-md`}><Heart size={16} className={activeWishlist ? 'fill-current' : ''} /></button>
+                    <Link to={`/product/${product.slug}`} className="w-10 h-10 rounded-full bg-white border border-slate-100 text-neutral-400 hover:text-brand-600 flex items-center justify-center transition-all shadow-md"><ArrowUpRight size={16} /></Link>
                 </div>
-
-                {/* Badge */}
-                {parseFloat(product.mrp) > parseFloat(product.price) && (
-                    <div className="absolute top-4 left-4 px-3 py-1 bg-neutral-900 text-white text-[9px] font-black uppercase tracking-widest rounded-lg">
-                        Sale
-                    </div>
-                )}
+                <div className="absolute inset-x-6 bottom-6 transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-10 shadow-2xl shadow-black/20"><button onClick={handleAddToCart} className={`w-full py-4 rounded-2xl flex items-center justify-center gap-3 font-bold text-[9px] uppercase tracking-widest transition-all ${isAdded ? 'bg-emerald-500 text-white' : 'bg-brand-600 text-white hover:bg-brand-500'}`}>{isAdded ? <CheckCircle2 size={14} /> : <><ShoppingBag size={14} /> Add to Cart</>}</button></div>
             </div>
-
-            {/* Product Info */}
-            <div className="p-6 pt-2 flex flex-col flex-1">
-                <div className="mb-4">
-                    <p className="text-neutral-400 text-[9px] font-black uppercase tracking-[0.2em] mb-1">{product.category_name}</p>
-                    <Link to={`/product/${product.slug}`}>
-                        <h3 className="text-lg font-bold text-neutral-900 group-hover:text-brand-600 transition-colors line-clamp-1 tracking-tight">
-                            {product.name}
-                        </h3>
-                    </Link>
-                </div>
-
-                <div className="flex items-center justify-between mb-6">
-                    <div className="flex flex-col">
-                        <span className="text-2xl font-black text-neutral-900 tracking-tighter">${product.price}</span>
-                        {parseFloat(product.mrp) > parseFloat(product.price) && (
-                            <span className="text-[10px] text-neutral-400 line-through font-bold">${product.mrp}</span>
-                        )}
-                    </div>
-                    <div className="flex text-amber-400">
-                        <Star size={12} fill="currentColor" />
-                        <Star size={12} fill="currentColor" />
-                        <Star size={12} fill="currentColor" />
-                        <Star size={12} fill="currentColor" />
-                        <Star size={12} className="text-neutral-200" />
-                    </div>
-                </div>
-                
-                {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-3">
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={isAdded}
-                        className={`h-12 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all duration-500 flex items-center justify-center gap-2 border ${isAdded
-                            ? 'bg-green-500 border-green-500 text-white'
-                            : 'bg-white border-neutral-200 text-neutral-900 hover:border-brand-500 hover:text-brand-600'
-                        }`}
-                    >
-                        {isAdded ? <CheckCircle2 size={14} /> : <><ShoppingBag size={14} /> Cart</>}
-                    </button>
-                    <button
-                        onClick={handleBuyNow}
-                        className="h-12 bg-neutral-900 text-white rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-brand-600 transition-all gold-shadow flex items-center justify-center gap-2"
-                    >
-                        <Zap size={14} fill="currentColor" /> Buy Now
-                    </button>
-                </div>
+            <div className="mt-6 px-4 flex flex-col items-center text-center">
+                <p className={`text-[9px] font-bold ${dark ? 'text-brand-400' : 'text-brand-600'} uppercase tracking-[0.3em] mb-2`}>{product.category_name || 'Series'}</p>
+                <Link to={`/product/${product.slug}`}><h3 className="text-lg font-bold uppercase tracking-tight group-hover:text-brand-600 transition-colors line-clamp-1 mb-3">{product.name}</h3></Link>
+                <div className="flex items-center gap-3"><span className={`text-xl font-bold italic tracking-tighter ${dark ? 'text-white' : 'text-slate-900'}`}>${product.price}</span></div>
             </div>
         </motion.div>
     );
 };
 
-const BenefitCard = ({ icon, title, desc }) => (
-    <div className="flex flex-col group">
-        <div className="w-14 h-14 bg-neutral-50 rounded-2xl flex items-center justify-center text-brand-600 mb-8 group-hover:bg-brand-500 group-hover:text-white transition-all duration-500">
-            {icon}
+const TrustItem = ({ icon, title, sub }) => (
+    <div className="flex items-center gap-4 group cursor-default">
+        <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">{icon}</div>
+        <div>
+            <h5 className="text-slate-900 text-sm font-bold tracking-tight mb-0.5">{title}</h5>
+            <p className="text-slate-500 text-xs font-medium">{sub}</p>
         </div>
-        <h3 className="text-xl font-bold text-neutral-900 mb-4">{title}</h3>
-        <p className="text-neutral-500 text-sm leading-relaxed">{desc}</p>
     </div>
 );
 

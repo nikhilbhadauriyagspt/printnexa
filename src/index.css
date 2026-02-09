@@ -2,23 +2,24 @@
 @plugin "tailwindcss-animate";
 
 :root {
-  --primary-color: #D4AF37; /* Classic Metallic Gold */
-  --bg-dark: #0a0a0a;      /* Pure Deep Black */
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  --primary-color: #2EBBB2; /* Vibrant Teal - Modern & Fresh */
+  --bg-dark: #1a2226;       /* Deep Slate - Professional */
+  font-family: 'Manrope', sans-serif;
 }
 
 @theme {
-  --color-brand-50: #fffdf0;
-  --color-brand-100: #fef9c3;
-  --color-brand-200: #fde68a;
-  --color-brand-300: #fcd34d;
-  --color-brand-400: #fbbf24;
-  --color-brand-500: #D4AF37; /* Metallic Gold */
-  --color-brand-600: #B8860B; /* Dark Gold */
-  --color-brand-700: #996515; /* Golden Brown */
-  --color-brand-800: #7a4d0f;
-  --color-brand-900: #451a03;
-  --color-brand-950: #260e01;
+  /* Custom Teal & Slate Palette */
+  --color-brand-50: #f0fdfc;
+  --color-brand-100: #ccf8f5;
+  --color-brand-200: #a5f0eb;
+  --color-brand-300: #7ce4dd;
+  --color-brand-400: #55d5cd;
+  --color-brand-500: #2EBBB2; /* User's Main Teal */
+  --color-brand-600: #259c94;
+  --color-brand-700: #4B616E; /* User's Dark Slate */
+  --color-brand-800: #3b4d56;
+  --color-brand-900: #2c3940;
+  --color-brand-950: #1a2226;
   
   --color-primary: var(--primary-color);
   --color-midnight: var(--bg-dark);
@@ -34,6 +35,10 @@
     from { transform: scale(0.95); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
   }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 }
 
 html {
@@ -47,48 +52,48 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8fafc; /* slate-50 */
+  background: #f0fdfc; /* brand-50 */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4AF37; /* brand-500 / Gold */
+  background: #4B616E; /* brand-700 */
   border-radius: 10px;
-  border: 2px solid #f8fafc;
+  border: 2px solid #f0fdfc;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8860B; /* brand-600 / Dark Gold */
+  background: #3b4d56; /* brand-800 */
 }
 
 /* For Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #D4AF37 #f8fafc;
+  scrollbar-color: #4B616E #f0fdfc;
 }
 
 @layer base {
   body {
-    @apply antialiased text-neutral-900 bg-white;
+    @apply antialiased text-stone-900 bg-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
 @layer utilities {
   .glass-effect {
-    @apply backdrop-blur-md bg-white/70 border border-white/20;
+    @apply backdrop-blur-md bg-white/80 border border-teal-100;
   }
   .search-overlay {
-    @apply fixed inset-0 z-[100] bg-white/95 backdrop-blur-xl;
+    @apply fixed inset-0 z-[100] bg-teal-50/95 backdrop-blur-xl;
     animation: fade-in 0.3s ease-out, zoom-in 0.3s ease-out;
   }
-  .text-gradient-gold {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-300 via-brand-500 to-brand-600;
+  .text-gradient-brand {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-500 to-brand-700;
   }
-  .bg-gradient-gold {
-    @apply bg-gradient-to-r from-brand-300 via-brand-500 to-brand-600;
+  .bg-gradient-brand {
+    @apply bg-gradient-to-r from-brand-500 to-brand-700;
   }
-  .gold-shadow {
-    @apply shadow-[0_0_25px_rgba(212,175,55,0.4)];
+  .brand-shadow {
+    @apply shadow-[0_4px_12px_rgba(46,187,178,0.15)];
   }
   .no-scrollbar {
     -ms-overflow-style: none;

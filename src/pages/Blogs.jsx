@@ -25,7 +25,7 @@ const Blogs = () => {
 
     return (
         <div className="bg-slate-50 min-h-screen pb-20">
-            <SEO pageName="blogs" fallbackTitle="Tech Insights - Inktrix" fallbackDesc="Read the latest news, tips, and reviews from Inktrix experts." />
+            <SEO pageName="blogs" fallbackTitle="Tech Insights - PrintNexa" fallbackDesc="Read the latest news, tips, and reviews from PrintNexa experts." />
 
             {/* Header */}
             <div className="bg-slate-900 py-20 px-6">

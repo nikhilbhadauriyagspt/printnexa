@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../api/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
-import { Calendar, User, Clock, ArrowLeft, Share2, Bookmark, ChevronRight } from 'lucide-react';
+import { Calendar, User, Clock, ArrowLeft, Bookmark, ChevronRight } from 'lucide-react';
 
 const BlogDetails = () => {
     const { slug } = useParams();
@@ -57,7 +57,7 @@ const BlogDetails = () => {
         <div className="bg-slate-50 min-h-screen pb-32">
                         <SEO 
                             pageName={`blog_${blog.id}`}
-                            fallbackTitle={`${blog.meta_title || blog.title} | Inktrix Insights`} 
+                            fallbackTitle={`${blog.meta_title || blog.title} | PrintNexa Insights`} 
                             fallbackDesc={blog.meta_description || blog.description}
                         />            <SchemaMarkup type="blog" data={blog} />
 
@@ -112,7 +112,7 @@ const BlogDetails = () => {
                                 </div>
                                 <div className="text-left">
                                     <p className="text-[10px] uppercase tracking-widest text-white/50 font-bold">Written by</p>
-                                    <p className="text-sm font-bold text-white">{blog.author || 'Inktrix Editorial'}</p>
+                                    <p className="text-sm font-bold text-white">{blog.author || 'PrintNexa Editorial'}</p>
                                 </div>
                             </div>
                             <div className="h-8 w-px bg-white/10 hidden sm:block"></div>
@@ -129,12 +129,9 @@ const BlogDetails = () => {
             <div className="container mx-auto px-4 relative z-20 -mt-20">
                 <article className="max-w-3xl mx-auto bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 p-8 md:p-16 lg:p-20 overflow-hidden">
                     
-                    {/* Share & Save Toolbar */}
+                    {/* Save Toolbar */}
                     <div className="flex justify-between items-center mb-12 pb-8 border-b border-slate-100">
                         <div className="flex items-center gap-4">
-                            <button className="flex items-center gap-2 text-slate-400 hover:text-brand-600 transition-colors font-bold text-xs uppercase tracking-widest">
-                                <Share2 size={16} /> Share
-                            </button>
                             <button className="flex items-center gap-2 text-slate-400 hover:text-brand-600 transition-colors font-bold text-xs uppercase tracking-widest">
                                 <Bookmark size={16} /> Save
                             </button>

@@ -154,9 +154,11 @@ const Hero = () => {
 };
 
 const TrustPoint = ({ icon, text }) => (
-  <div className="flex flex-col items-center lg:items-start gap-3">
-    <div className="text-brand-600">{icon}</div>
-    <span className="text-[9px] font-black tracking-widest text-slate-900 uppercase">{text}</span>
+  <div className="flex items-center gap-3 group cursor-default">
+    <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-all">
+      {React.cloneElement(icon, { size: 20 })}
+    </div>
+    <span className="text-[10px] font-bold tracking-wider text-slate-700 uppercase group-hover:text-brand-600 transition-colors">{text}</span>
   </div>
 );
 
