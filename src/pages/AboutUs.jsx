@@ -18,7 +18,8 @@ import {
     Quote,
     MapPin,
     Target,
-    Compass
+    Compass,
+    Cpu
 } from 'lucide-react';
 
 const AboutUs = () => {
@@ -54,7 +55,7 @@ const AboutUs = () => {
                             Innovation <br/> <span className="text-brand-600">Meets Trust.</span>
                         </h1>
                         <p className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed max-w-2xl mb-12">
-                            Prime Fix Solutions delivers complete technology ecosystems designed for reliability, efficiency, and long-term value from our headquarters in Louisiana.
+                            Prime Fix Solutions delivers complete professional printing ecosystems designed for reliability, efficiency, and long-term value from our headquarters in Louisiana.
                         </p>
                         <div className="flex flex-wrap gap-12">
                             <StatItem label="Established" value="2015" />
@@ -87,10 +88,10 @@ const AboutUs = () => {
                                     <span className="w-8 h-px bg-brand-600"></span> Our Story
                                 </div>
                                 <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight uppercase tracking-tight">
-                                    Redefining the <br/> Tech Experience.
+                                    Redefining the <br/> Printing Experience.
                                 </h2>
                                 <p className="text-slate-500 text-lg leading-relaxed font-medium">
-                                    Founded in New Orleans, we saw a gap in the market — too many people struggled to find authentic, affordable, and dependable computing and printing solutions from trusted sources. 
+                                    Founded in New Orleans, we saw a gap in the market — too many people struggled to find authentic, affordable, and dependable printing solutions from trusted sources. 
                                 </p>
                                 <p className="text-slate-500 text-lg leading-relaxed font-medium">
                                     That’s why we partnered with HP, one of the world’s most respected names in innovation, to bring customers a seamless shopping experience backed by expert service.
@@ -120,9 +121,9 @@ const AboutUs = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <FeatureCard 
-                            icon={<Monitor size={24} />} 
-                            title="Laptops & Computers" 
-                            desc="High-performance systems for home, business, and professional use." 
+                            icon={<Cpu size={24} />} 
+                            title="Precision Hardware" 
+                            desc="Specialized high-performance printer systems for enterprise and creative environments." 
                         />
                         <FeatureCard 
                             icon={<Printer size={24} />} 
@@ -163,7 +164,7 @@ const AboutUs = () => {
                                 <Target size={48} className="text-brand-600 mb-8" />
                                 <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-8">Our Mission</h3>
                                 <p className="text-slate-400 text-xl leading-relaxed font-light">
-                                    To empower every customer with reliable, efficient, and sustainable technology solutions through genuine products and a customer-first approach.
+                                    To empower every customer with reliable, efficient, and sustainable printing solutions through genuine products and a customer-first approach.
                                 </p>
                             </div>
                         </FadeIn>

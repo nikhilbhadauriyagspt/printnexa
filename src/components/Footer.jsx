@@ -72,8 +72,8 @@ const Footer = () => {
                         <h2 className="text-4xl font-black text-white leading-tight capitalize mb-6 tracking-tight">
                             Professional <span className="text-brand-600">Printing Solutions.</span>
                         </h2>
-                        <p className="text-sm font-medium text-slate-500 capitalize tracking-widest max-w-md">
-                            Authorized retailer of professional printing equipment and industrial supplies.
+                        <p className="text-sm font-medium text-slate-400 leading-relaxed max-w-md">
+                            PrimeFix Solutions is a premier provider of high-quality products and professional services. We are committed to delivering excellence, reliability, and exceptional support to our customers, ensuring the best solutions for all your needs.
                         </p>
                     </div>
 
@@ -103,10 +103,10 @@ const Footer = () => {
                     {/* ... (Columns remain similar but with tighter spacing) */}
                     <div className="space-y-4">
                         <h4 className="text-[14px] font-black text-white capitalize tracking-[0.2em] mb-4 opacity-50">Explore</h4>
-                        <ul className="space-y-2.5">
+                        <ul className="space-y-3">
                             {['Home', 'Products', 'About Us', 'Contact'].map((item, i) => (
                                 <li key={i}>
-                                    <Link to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`} className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">
+                                    <Link to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`} className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">
                                         {item}
                                     </Link>
                                 </li>
@@ -116,41 +116,56 @@ const Footer = () => {
 
                     <div className="space-y-4">
                         <h4 className="text-[14px] font-black text-white capitalize tracking-[0.2em] mb-4 opacity-50">Categories</h4>
-                        <ul className="space-y-2.5">
+                        <ul className="space-y-3">
                             {categories.length > 0 ? categories.map(cat => (
                                 <li key={cat.id}>
-                                    <Link to={`/products?category=${cat.slug}`} className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">
+                                    <Link to={`/products?category=${cat.slug}`} className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">
                                         {cat.name}
                                     </Link>
                                 </li>
                             )) : (
-                                <li><Link to="/products" className="text-xs font-bold hover:text-white transition-colors block">All Printers</Link></li>
+                                <li><Link to="/products" className="text-sm font-bold hover:text-white transition-colors block">All Printers</Link></li>
                             )}
                         </ul>
                     </div>
 
                     <div className="space-y-4">
                         <h4 className="text-[14px] font-black text-white capitalize tracking-[0.2em] mb-4 opacity-50">Support</h4>
-                        <ul className="space-y-2.5">
-                            <li><Link to="/privacy-policy" className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">Privacy Policy</Link></li>
-                            <li><Link to="/cookie-policy" className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">Cookie Policy</Link></li>
-                            <li><Link to="/terms-and-conditions" className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">Terms & Conditions</Link></li>
-                            <li><Link to="/refund-policy" className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">Return Policy</Link></li>
-                            <li><Link to="/shipping-policy" className="text-xs font-bold hover:text-white transition-colors block capitalize tracking-wider">Shipping Policy</Link></li>
+                        <ul className="space-y-3">
+                            <li><Link to="/privacy-policy" className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">Privacy Policy</Link></li>
+                            <li><Link to="/cookie-policy" className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">Cookie Policy</Link></li>
+                            <li><Link to="/terms-and-conditions" className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">Terms & Conditions</Link></li>
+                            <li><Link to="/refund-policy" className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">Return Policy</Link></li>
+                            <li><Link to="/shipping-policy" className="text-sm font-bold hover:text-white transition-colors block capitalize tracking-wider">Shipping Policy</Link></li>
                         </ul>
                     </div>
 
                     <div className="space-y-4">
                         <h4 className="text-[14px] font-black text-white capitalize tracking-[0.2em] mb-4 opacity-50">Contact</h4>
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {branding.contact_email && (
-                                <a href={`mailto:${branding.contact_email}`} className="block text-xs font-bold text-white hover:text-brand-500 transition-colors capitalize tracking-wider">{branding.contact_email}</a>
+                                <div className="flex items-center gap-3 group">
+                                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand-600 transition-colors">
+                                        <Mail size={14} className="text-brand-500 group-hover:text-white" />
+                                    </div>
+                                    <a href={`mailto:${branding.contact_email}`} className="text-sm font-bold text-white hover:text-brand-500 transition-colors capitalize tracking-wider">{branding.contact_email}</a>
+                                </div>
                             )}
                             {branding.phone && (
-                                <p className="text-xs font-bold text-slate-500 capitalize tracking-wider">{branding.phone}</p>
+                                <div className="flex items-center gap-3 group">
+                                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand-600 transition-colors">
+                                        <Phone size={14} className="text-brand-500 group-hover:text-white" />
+                                    </div>
+                                    <p className="text-sm font-bold text-white uppercase tracking-wider">{branding.phone}</p>
+                                </div>
                             )}
                             {branding.contact_address && (
-                                <p className="text-[10px] font-bold text-slate-500 capitalize tracking-wider leading-relaxed">{branding.contact_address}</p>
+                                <div className="flex items-start gap-3 group">
+                                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center mt-1 group-hover:bg-brand-600 transition-colors">
+                                        <MapPin size={14} className="text-brand-500 group-hover:text-white" />
+                                    </div>
+                                    <p className="text-sm font-bold text-slate-400 capitalize tracking-wider leading-relaxed flex-1">{branding.contact_address}</p>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -167,7 +182,7 @@ const Footer = () => {
                 <div className="py-10 flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex items-center gap-4">
                         <p className="text-sm font-black capitalize tracking-[0.2em] text-slate-500">
-                            © 2026 {branding.name} Inc. | All Rights Reserved.
+                            © 2026 PrimeFix Solutions LLC | All Rights Reserved.
                         </p>
                     </div>
 
