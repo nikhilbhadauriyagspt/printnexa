@@ -1,58 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Static Pages -->
   <url>
     <loc>http://primefixsolutions.shop/</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/about</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/products</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/contact</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/faq</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/track</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.5</priority>
   </url>
+
+  <!-- Categories -->
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=all-in-one-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=dot-matrix-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=inkjet-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=large-format-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=laser-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=led-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=printer-accessories</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=supertank-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://primefixsolutions.shop/products?category=thermal-printers</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Policies -->
   <url>
     <loc>http://primefixsolutions.shop/pages/privacy</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/pages/terms</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/pages/shipping</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/pages/refund</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>http://primefixsolutions.shop/pages/cookies</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.4</priority>
   </url>
 </urlset>
