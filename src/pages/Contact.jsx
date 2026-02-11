@@ -8,7 +8,7 @@ import { FadeIn } from '../components/Reveal';
 const Contact = () => {
     const [branding, setBranding] = useState({
         name: 'Prime Fix Solutions',
-        contact_email: 'primefixsolutions.us@outlook.com',
+        contact_email: 'info@primefixsolutions.shop',
         contact_address: '3014 Dauphine st ste A PM3 357287 New Orleans, Louisiana 70117-6755 US',
         phone: '',
         logo_url: ''
@@ -83,29 +83,29 @@ const Contact = () => {
 
             <div className="container mx-auto px-6 py-20 lg:px-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-                    
+
                     {/* --- 2. LEFT: CONTACT INFO --- */}
                     <div className="lg:col-span-4 space-y-10">
                         <div className="space-y-6">
                             <FadeIn delay={0.1}>
-                                <ContactInfoItem 
-                                    icon={<Mail size={20} />} 
-                                    title="Email Support" 
-                                    value={branding.contact_email} 
+                                <ContactInfoItem
+                                    icon={<Mail size={20} />}
+                                    title="Email Support"
+                                    value={branding.contact_email}
                                 />
                             </FadeIn>
                             <FadeIn delay={0.2}>
-                                <ContactInfoItem 
-                                    icon={<Phone size={20} />} 
-                                    title="Phone Assistance" 
-                                    value={branding.phone} 
+                                <ContactInfoItem
+                                    icon={<Phone size={20} />}
+                                    title="Phone Assistance"
+                                    value={branding.phone}
                                 />
                             </FadeIn>
                             <FadeIn delay={0.3}>
-                                <ContactInfoItem 
-                                    icon={<MapPin size={20} />} 
-                                    title="Corporate Location" 
-                                    value={branding.contact_address} 
+                                <ContactInfoItem
+                                    icon={<MapPin size={20} />}
+                                    title="Corporate Location"
+                                    value={branding.contact_address}
                                 />
                             </FadeIn>
                         </div>
@@ -148,46 +148,46 @@ const Contact = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
-                                                <input 
-                                                    type="text" required 
-                                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all font-medium text-slate-900" 
+                                                <input
+                                                    type="text" required
+                                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all font-medium text-slate-900"
                                                     placeholder="Alex Vane"
-                                                    value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} 
+                                                    value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
                                                 />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
-                                                <input 
-                                                    type="email" required 
-                                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all font-medium text-slate-900" 
+                                                <input
+                                                    type="email" required
+                                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all font-medium text-slate-900"
                                                     placeholder="email@example.com"
-                                                    value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} 
+                                                    value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
                                                 />
                                             </div>
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Inquiry Subject</label>
-                                            <input 
-                                                type="text" required 
-                                                className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all font-medium text-slate-900" 
+                                            <input
+                                                type="text" required
+                                                className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all font-medium text-slate-900"
                                                 placeholder="Product Specifications"
-                                                value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} 
+                                                value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })}
                                             />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Message</label>
-                                            <textarea 
-                                                rows="5" required 
-                                                className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all resize-none font-medium text-slate-900" 
+                                            <textarea
+                                                rows="5" required
+                                                className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:border-brand-600 outline-none transition-all resize-none font-medium text-slate-900"
                                                 placeholder="Provide details regarding your request..."
-                                                value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}
+                                                value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}
                                             ></textarea>
                                         </div>
-                                        <button 
+                                        <button
                                             disabled={loading}
                                             className="w-full md:w-auto px-12 py-5 bg-slate-900 text-white rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-brand-600 transition-all shadow-xl disabled:bg-slate-200 flex items-center justify-center gap-3"
                                         >
-                                            {loading ? 'Processing...' : 'Send Inquiry'} 
+                                            {loading ? 'Processing...' : 'Send Inquiry'}
                                             {!loading && <Send size={16} />}
                                         </button>
                                     </form>

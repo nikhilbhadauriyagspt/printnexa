@@ -11,9 +11,9 @@ import {
 const Footer = () => {
     const [branding, setBranding] = useState({
         name: 'Prime Fix Solutions',
-        contact_email: 'primefixsolutions.us@outlook.com',
+        contact_email: 'info@primefixsolutions.shop',
         contact_address: '3014 Dauphine st ste A PM3 357287 New Orleans, Louisiana 70117-6755 US',
-        phone: '',
+        phone: '+1-402-508-9751',
         logo_url: '/logo/primefixlogo.png'
     });
     const [email, setEmail] = useState('');

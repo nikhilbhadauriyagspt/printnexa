@@ -7,10 +7,10 @@ import { ChevronRight, Cookie, Clock, Mail, Globe, Shield } from 'lucide-react';
 const CookiePolicy = () => {
     return (
         <div className="bg-white min-h-screen font-sans selection:bg-brand-600 selection:text-white pb-20">
-            <SEO 
-                pageName="cookie_policy" 
-                fallbackTitle="Cookie Policy | Prime Fix Solutions" 
-                fallbackDesc="Learn about how we use cookies and similar technologies on our website." 
+            <SEO
+                pageName="cookie_policy"
+                fallbackTitle="Cookie Policy | Prime Fix Solutions"
+                fallbackDesc="Learn about how we use cookies and similar technologies on our website."
             />
 
             {/* --- HEADER --- */}
@@ -79,7 +79,7 @@ const CookiePolicy = () => {
 
                             <section>
                                 <h2 className="text-2xl font-black text-slate-900 uppercase">3. TYPES OF COOKIES WE USE</h2>
-                                
+
                                 <h3>A. Essential Cookies (Strictly Necessary)</h3>
                                 <p>These cookies are required for the website to function properly. Without them, certain services may not be available.</p>
                                 <p>They help with:</p>
@@ -173,7 +173,7 @@ const CookiePolicy = () => {
                                 <h2 className="text-2xl font-black text-slate-900 uppercase">8. SALE OR SHARING OF PERSONAL INFORMATION</h2>
                                 <p>We do not sell personal information. If cookies are considered “sharing” under certain US state privacy laws (such as targeted advertising), you may exercise your rights by:</p>
                                 <ul>
-                                    <li>Emailing: <a href="mailto:primefixsolutions.us@outlook.com" className="text-brand-600 font-bold">primefixsolutions.us@outlook.com</a></li>
+                                    <li>Emailing: <a href="mailto:info@primefixsolutions.shop" className="text-brand-600 font-bold">info@primefixsolutions.shop</a></li>
                                     <li>Visiting: <a href="http://primefixsolutions.shop/contact" className="text-brand-600 font-bold">http://primefixsolutions.shop/contact</a></li>
                                 </ul>
                             </section>
@@ -198,7 +198,7 @@ const CookiePolicy = () => {
                                 <p>3014 Dauphine St Ste A PM3 357287</p>
                                 <p>New Orleans, LA 70117</p>
                                 <p>United States</p>
-                                <p className="pt-4 flex items-center gap-3 text-brand-600"><Mail size={16} /> primefixsolutions.us@outlook.com</p>
+                                <p className="pt-4 flex items-center gap-3 text-brand-600"><Mail size={16} /> info@primefixsolutions.shop</p>
                                 <p className="flex items-center gap-3 text-brand-600"><Globe size={16} /> <a href="http://primefixsolutions.shop/">http://primefixsolutions.shop/</a></p>
                             </address>
                         </div>

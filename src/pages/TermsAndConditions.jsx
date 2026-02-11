@@ -7,10 +7,10 @@ import { ChevronRight, FileText, Clock, Mail, Phone, MapPin } from 'lucide-react
 const TermsAndConditions = () => {
     return (
         <div className="bg-white min-h-screen font-sans selection:bg-brand-600 selection:text-white pb-20">
-            <SEO 
-                pageName="terms_and_conditions" 
-                fallbackTitle="Terms and Conditions | Prime Fix Solutions" 
-                fallbackDesc="Read our legal terms and conditions for using our services." 
+            <SEO
+                pageName="terms_and_conditions"
+                fallbackTitle="Terms and Conditions | Prime Fix Solutions"
+                fallbackDesc="Read our legal terms and conditions for using our services."
             />
 
             {/* --- HEADER --- */}
@@ -48,7 +48,7 @@ const TermsAndConditions = () => {
                             Prime Fix Solutions is your trusted destination for authentic, high-performance printers and printing accessories from HP and other leading technology brands.
                         </p>
                         <p>
-                            You can contact us by phone at 00000000000, email at <a href="mailto:primefixsolutions.us@outlook.com" className="text-brand-600 font-bold">primefixsolutions.us@outlook.com</a>, or by mail to 3014 Dauphine st ste A PM3 357287, New Orleans, LA 70117, United States.
+                            You can contact us by phone at 00000000000, email at <a href="mailto:info@primefixsolutions.shop" className="text-brand-600 font-bold">info@primefixsolutions.shop</a>, or by mail to 3014 Dauphine st ste A PM3 357287, New Orleans, LA 70117, United States.
                         </p>
                         <p>
                             These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you"), and PrimeFix Solutions LLC, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. <strong>IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</strong>
@@ -111,7 +111,7 @@ const TermsAndConditions = () => {
                         </ul>
                         <p>solely for your personal, non-commercial use or internal business purpose.</p>
                         <p>Except as set out in this section or elsewhere in our Legal Terms, no part of the Services and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.</p>
-                        <p>If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: <a href="mailto:primefixsolutions.us@outlook.com">primefixsolutions.us@outlook.com</a>. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.</p>
+                        <p>If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: <a href="mailto:info@primefixsolutions.shop">info@primefixsolutions.shop</a>. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.</p>
                         <p>We reserve all rights not expressly granted to you in and to the Services, Content, and Marks.</p>
                         <p>Any breach of these Intellectual Property Rights will constitute a material breach of our Legal Terms and your right to use our Services will terminate immediately.</p>
                         <h3>Your submissions</h3>
@@ -251,7 +251,7 @@ const TermsAndConditions = () => {
                                 <p>New Orleans, LA 70117</p>
                                 <p>United States</p>
                                 <p className="pt-4 flex items-center gap-3 text-brand-600"><Phone size={16} /> 00000000000</p>
-                                <p className="flex items-center gap-3 text-brand-600"><Mail size={16} /> primefixsolutions.us@outlook.com</p>
+                                <p className="flex items-center gap-3 text-brand-600"><Mail size={16} /> info@primefixsolutions.shop</p>
                             </address>
                         </div>
                     </FadeIn>

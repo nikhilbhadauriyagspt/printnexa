@@ -7,10 +7,10 @@ import { ChevronRight, Truck, Clock, Mail, Phone, Globe } from 'lucide-react';
 const ShippingPolicy = () => {
     return (
         <div className="bg-white min-h-screen font-sans selection:bg-brand-600 selection:text-white pb-20">
-            <SEO 
-                pageName="shipping_policy" 
-                fallbackTitle="Shipping & Delivery Policy | Prime Fix Solutions" 
-                fallbackDesc="Read our shipping and delivery options, timeframes, and policies." 
+            <SEO
+                pageName="shipping_policy"
+                fallbackTitle="Shipping & Delivery Policy | Prime Fix Solutions"
+                fallbackDesc="Read our shipping and delivery options, timeframes, and policies."
             />
 
             {/* --- HEADER --- */}
@@ -88,10 +88,10 @@ const ShippingPolicy = () => {
                         <p>If you have any further questions or comments, you may contact us by:</p>
                         <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 my-8">
                             <address className="not-italic text-slate-700 font-bold leading-relaxed space-y-3">
-                                <p className="flex items-center gap-3"><Phone size={18} className="text-brand-600" /> <span>Phone: XXXXXXXXXX</span></p>
-                                <p className="flex items-center gap-3"><Mail size={18} className="text-brand-600" /> <span>Email: primefixsolutions.us@outlook.com</span></p>
+                                <p className="flex items-center gap-3"><Phone size={18} className="text-brand-600" /> <span>Phone: +1-402-508-9751</span></p>
+                                <p className="flex items-center gap-3"><Mail size={18} className="text-brand-600" /> <span>Email: info@primefixsolutions.shop</span></p>
                                 <p className="flex items-center gap-3">
-                                    <ChevronRight size={18} className="text-brand-600" /> 
+                                    <ChevronRight size={18} className="text-brand-600" />
                                     <span>Online contact form: <Link to="/contact" className="text-brand-600">https://primefixsolutions.shop/contact</Link></span>
                                 </p>
                             </address>
