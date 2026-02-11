@@ -7,10 +7,10 @@ import { ChevronRight, RotateCcw, Clock, Mail, Package, AlertCircle } from 'luci
 const ReturnPolicy = () => {
     return (
         <div className="bg-white min-h-screen font-sans selection:bg-brand-600 selection:text-white pb-20">
-            <SEO 
-                pageName="return_policy" 
-                fallbackTitle="Return Policy | Prime Fix Solutions" 
-                fallbackDesc="Read our return and refund policy for your purchases." 
+            <SEO
+                pageName="return_policy"
+                fallbackTitle="Return Policy | Prime Fix Solutions"
+                fallbackDesc="Read our return and refund policy for your purchases."
             />
 
             {/* --- HEADER --- */}
@@ -37,9 +37,7 @@ const ReturnPolicy = () => {
             <article className="container mx-auto px-6 py-16 lg:py-24">
                 <div className="max-w-4xl mx-auto prose prose-slate prose-lg lg:prose-xl">
                     <FadeIn>
-                        <p className="lead">
-                            Thank you for your purchase. We hope you are happy with your purchase. However, if you are not completely satisfied with your purchase for any reason, you may return it to us for a refund only. Please see below for more information on our return policy.
-                        </p>
+
 
                         <div className="my-12 space-y-12">
                             <section>
