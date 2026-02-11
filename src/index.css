@@ -2,24 +2,24 @@
 @plugin "tailwindcss-animate";
 
 :root {
-  --primary-color: #2EBBB2; /* Vibrant Teal - Modern & Fresh */
-  --bg-dark: #1a2226;       /* Deep Slate - Professional */
+  --primary-color: #5D56F1; /* Professional Indigo/Blue - New Brand Color */
+  --bg-dark: #0f172a;       /* Darker Navy - Professional */
   font-family: 'Manrope', sans-serif;
 }
 
 @theme {
-  /* Custom Teal & Slate Palette */
-  --color-brand-50: #f0fdfc;
-  --color-brand-100: #ccf8f5;
-  --color-brand-200: #a5f0eb;
-  --color-brand-300: #7ce4dd;
-  --color-brand-400: #55d5cd;
-  --color-brand-500: #2EBBB2; /* User's Main Teal */
-  --color-brand-600: #259c94;
-  --color-brand-700: #4B616E; /* User's Dark Slate */
-  --color-brand-800: #3b4d56;
-  --color-brand-900: #2c3940;
-  --color-brand-950: #1a2226;
+  /* Custom Indigo & Navy Palette */
+  --color-brand-50: #f5f5ff;
+  --color-brand-100: #ededff;
+  --color-brand-200: #d1d1ff;
+  --color-brand-300: #b5b5ff;
+  --color-brand-400: #8a8aff;
+  --color-brand-500: #5D56F1; /* User's Main Brand Color */
+  --color-brand-600: #4c46d1;
+  --color-brand-700: #3b37a3; 
+  --color-brand-800: #2a2975;
+  --color-brand-900: #1a1a47;
+  --color-brand-950: #0f172a;
   
   --color-primary: var(--primary-color);
   --color-midnight: var(--bg-dark);
@@ -52,23 +52,23 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0fdfc; /* brand-50 */
+  background: #f5f5ff; /* brand-50 */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4B616E; /* brand-700 */
+  background: #5D56F1; /* brand-500 */
   border-radius: 10px;
-  border: 2px solid #f0fdfc;
+  border: 2px solid #f5f5ff;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b4d56; /* brand-800 */
+  background: #4c46d1; /* brand-600 */
 }
 
 /* For Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #4B616E #f0fdfc;
+  scrollbar-color: #5D56F1 #f5f5ff;
 }
 
 @layer base {
@@ -80,10 +80,10 @@ html {
 
 @layer utilities {
   .glass-effect {
-    @apply backdrop-blur-md bg-white/80 border border-teal-100;
+    @apply backdrop-blur-md bg-white/80 border border-brand-100;
   }
   .search-overlay {
-    @apply fixed inset-0 z-[100] bg-teal-50/95 backdrop-blur-xl;
+    @apply fixed inset-0 z-[100] bg-brand-50/95 backdrop-blur-xl;
     animation: fade-in 0.3s ease-out, zoom-in 0.3s ease-out;
   }
   .text-gradient-brand {
@@ -93,7 +93,7 @@ html {
     @apply bg-gradient-to-r from-brand-500 to-brand-700;
   }
   .brand-shadow {
-    @apply shadow-[0_4px_12px_rgba(46,187,178,0.15)];
+    @apply shadow-[0_4px_12px_rgba(93,86,241,0.15)];
   }
   .no-scrollbar {
     -ms-overflow-style: none;
