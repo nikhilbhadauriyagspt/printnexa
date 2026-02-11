@@ -82,17 +82,17 @@ const FAQ = () => {
                 </div>
             </section>
 
-            {/* --- 2. FAQ ACCORDION LIST --- */}
+            {/* --- 2. FAQ GRID LIST --- */}
             <section className="py-20 relative z-20">
-                <div className="container mx-auto px-6 max-w-4xl">
-                    <div className="space-y-4">
-                        {loading ? (
-                            <div className="flex flex-col items-center py-20 gap-4">
-                                <div className="w-10 h-10 border-2 border-slate-200 border-t-brand-600 rounded-full animate-spin"></div>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Loading Records</p>
-                            </div>
-                        ) : filteredFaqs.length > 0 ? (
-                            filteredFaqs.map((faq, index) => (
+                <div className="container mx-auto px-6 max-w-6xl">
+                    {loading ? (
+                        <div className="flex flex-col items-center py-20 gap-4">
+                            <div className="w-10 h-10 border-2 border-slate-200 border-t-brand-600 rounded-full animate-spin"></div>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Loading Records</p>
+                        </div>
+                    ) : filteredFaqs.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                            {filteredFaqs.map((faq, index) => (
                                 <FadeIn key={faq.id} delay={index * 0.05}>
                                     <FAQItem 
                                         faq={faq} 
@@ -100,16 +100,16 @@ const FAQ = () => {
                                         onClick={() => setActiveIndex(activeIndex === index ? null : index)} 
                                     />
                                 </FadeIn>
-                            ))
-                        ) : (
-                            <div className="text-center py-32 bg-white rounded-[3rem] border border-slate-200 border-dashed">
-                                <AlertCircle size={48} className="text-slate-200 mx-auto mb-6" />
-                                <h3 className="text-xl font-bold text-slate-900 mb-2 uppercase">No Results Found</h3>
-                                <p className="text-slate-500 mb-8 max-w-xs mx-auto text-sm font-medium">Try a different keyword or contact our support team directly.</p>
-                                <button onClick={() => setSearchTerm('')} className="text-brand-600 font-bold uppercase text-xs tracking-widest hover:underline">Clear Search</button>
-                            </div>
-                        )}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-32 bg-white rounded-[3rem] border border-slate-200 border-dashed max-w-4xl mx-auto">
+                            <AlertCircle size={48} className="text-slate-200 mx-auto mb-6" />
+                            <h3 className="text-xl font-bold text-slate-900 mb-2 uppercase">No Results Found</h3>
+                            <p className="text-slate-500 mb-8 max-w-xs mx-auto text-sm font-medium">Try a different keyword or contact our support team directly.</p>
+                            <button onClick={() => setSearchTerm('')} className="text-brand-600 font-bold uppercase text-xs tracking-widest hover:underline">Clear Search</button>
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -144,16 +144,16 @@ const FAQ = () => {
 // --- HELPER COMPONENT ---
 
 const FAQItem = ({ faq, isOpen, onClick }) => (
-    <div className={`group bg-white rounded-[2rem] border transition-all duration-500 ${isOpen ? 'border-brand-600 ring-4 ring-brand-600/5 shadow-xl' : 'border-slate-200 hover:border-slate-300 shadow-sm'}`}>
+    <div className={`group bg-white rounded-3xl border transition-all duration-500 ${isOpen ? 'border-brand-600 ring-4 ring-brand-600/5 shadow-lg' : 'border-slate-100 hover:border-slate-200 shadow-sm'}`}>
         <button 
             onClick={onClick}
-            className="w-full flex items-center justify-between p-6 md:p-8 text-left"
+            className="w-full flex items-center justify-between p-6 text-left"
         >
-            <span className={`font-bold text-base md:text-lg pr-8 transition-colors duration-500 ${isOpen ? 'text-brand-600' : 'text-slate-900'}`}>
+            <span className={`font-bold text-sm md:text-base pr-4 transition-colors duration-500 ${isOpen ? 'text-brand-600' : 'text-slate-900'}`}>
                 {faq.question}
             </span>
-            <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-brand-600 text-white rotate-180 shadow-md' : 'bg-slate-50 text-slate-400 group-hover:bg-slate-100'}`}>
-                <ChevronDown size={20} />
+            <div className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-brand-600 text-white rotate-180' : 'bg-slate-50 text-slate-400 group-hover:bg-slate-100'}`}>
+                <ChevronDown size={16} />
             </div>
         </button>
         
@@ -163,11 +163,11 @@ const FAQItem = ({ faq, isOpen, onClick }) => (
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                 >
-                    <div className="px-6 pb-6 md:px-8 md:pb-8">
-                        <div className="pt-6 border-t border-slate-100 text-slate-500 text-base leading-relaxed font-medium">
+                    <div className="px-6 pb-6">
+                        <div className="pt-4 border-t border-slate-50 text-slate-500 text-sm leading-relaxed font-medium">
                             {faq.answer}
                         </div>
                     </div>

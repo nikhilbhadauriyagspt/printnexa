@@ -134,7 +134,7 @@ const Checkout = () => {
             "intent": "capture"
         }}>
             <div className="bg-slate-50 min-h-screen pb-20 font-sans">
-                <SEO pageName="checkout" fallbackTitle="Checkout | PrintNexa" fallbackDesc="Secure Checkout" />
+                <SEO pageName="checkout" fallbackTitle="Checkout | Prime Fix Solutions" fallbackDesc="Secure Checkout" />
 
                 {/* Mini Hero for Navbar Visibility */}
                 <div className="bg-slate-950 h-32 w-full absolute top-0 left-0 right-0 z-0"></div>

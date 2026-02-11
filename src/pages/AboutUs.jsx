@@ -3,25 +3,26 @@ import { Link } from 'react-router-dom';
 import api from '../api/api';
 import SEO from '../components/SEO';
 import { FadeIn } from '../components/Reveal';
+import { motion } from 'framer-motion';
 import { 
     ShieldCheck, 
-    Zap, 
     ArrowRight, 
-    Quote, 
     Award, 
     Globe, 
-    Eye, 
     CheckCircle2, 
-    Leaf, 
-    Users, 
-    Briefcase,
-    Settings,
-    Package,
-    History
+    Monitor, 
+    Printer, 
+    Settings, 
+    Package, 
+    Zap, 
+    Quote,
+    MapPin,
+    Target,
+    Compass
 } from 'lucide-react';
 
 const AboutUs = () => {
-    const [branding, setBranding] = useState({ name: 'PrintNexa' });
+    const [branding, setBranding] = useState({ name: 'Prime Fix Solutions' });
     
     useEffect(() => {
         const websiteId = import.meta.env.VITE_WEBSITE_ID || 1;
@@ -29,170 +30,203 @@ const AboutUs = () => {
     }, []);
 
     return (
-        <div className="bg-white min-h-screen relative font-sans selection:bg-brand-600 selection:text-white pb-20">
+        <div className="bg-white min-h-screen relative font-sans selection:bg-brand-600 selection:text-white">
             <SEO
                 pageName="about"
-                fallbackTitle={`Company Overview | ${branding.name}`}
-                fallbackDesc={`Discover the mission and operational standards of ${branding.name}.`}
+                fallbackTitle={`Corporate Profile | ${branding.name}`}
+                fallbackDesc={`Authorized HP Partner providing authentic technology solutions nationwide.`}
             />
 
-            {/* --- 1. MODERN MINIMAL HERO --- */}
-            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-50 overflow-hidden">
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-600/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
-                <div className="container mx-auto px-6 lg:px-12 text-center relative z-10">
-                    <FadeIn>
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full mb-8 shadow-sm">
-                            <Briefcase size={12} className="text-brand-600" />
-                            <span className="text-slate-500 font-bold uppercase tracking-widest text-[9px]">About Our Operations</span>
+            {/* --- SECTION 1: CINEMATIC HERO --- */}
+            <section className="relative min-h-[80vh] flex items-center pt-20 overflow-hidden bg-slate-950">
+                <div className="absolute inset-0 z-0">
+                    <img src="/about-us.jpg" className="w-full h-full object-cover opacity-30 grayscale" alt="HQ" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
+                </div>
+                
+                <div className="container mx-auto px-6 lg:px-12 relative z-10">
+                    <FadeIn direction="right">
+                        <div className="inline-flex items-center gap-3 px-4 py-2 bg-brand-600 text-white rounded-full mb-8 shadow-xl shadow-brand-600/20">
+                            <Award size={16} />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Authorized HP Partner</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 leading-none uppercase mb-8 tracking-tight">
-                            Professional <span className="text-brand-600">Hardware</span> <br/>Distribution.
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none uppercase mb-8 tracking-tighter">
+                            Innovation <br/> <span className="text-brand-600">Meets Trust.</span>
                         </h1>
-                        <p className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto mb-12">
-                            We specialize in the supply of high-performance printing technology for business environments and creative workspaces.
+                        <p className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed max-w-2xl mb-12">
+                            Prime Fix Solutions delivers complete technology ecosystems designed for reliability, efficiency, and long-term value from our headquarters in Louisiana.
                         </p>
-                        <div className="flex justify-center items-center gap-6">
-                            <div className="flex -space-x-3">
-                                {[1,2,3].map(i => <div key={i} className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 shadow-sm"><Users size={16} /></div>)}
-                            </div>
-                            <div className="h-8 w-px bg-slate-200"></div>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-left">Internal<br/>Support Team</p>
+                        <div className="flex flex-wrap gap-12">
+                            <StatItem label="Established" value="2015" />
+                            <StatItem label="U.S. States" value="50+" />
+                            <StatItem label="Authenticity" value="100%" />
                         </div>
                     </FadeIn>
                 </div>
             </section>
 
-            {/* --- 2. STAGGERED STORY SECTION --- */}
-            <section className="py-24 bg-white overflow-hidden">
+            {/* --- SECTION 2: THE NARRATIVE --- */}
+            <section className="py-24 lg:py-40 bg-white">
                 <div className="container mx-auto px-6 lg:px-12">
-                    
-                    {/* Row 1: History */}
-                    <div className="flex flex-col lg:flex-row items-center gap-16 mb-24">
-                        <div className="w-full lg:w-1/2">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                        <div className="relative">
                             <FadeIn direction="right">
-                                <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-2xl">
-                                    <img src="/about-us.jpg" className="w-full h-full object-cover" alt="Logistics" />
+                                <div className="relative rounded-[4rem] overflow-hidden shadow-2xl border-8 border-slate-50">
+                                    <img src="/why-choose-us.jpg" className="w-full h-full object-cover" alt="Team" />
+                                </div>
+                                <div className="absolute -bottom-10 -right-10 hidden xl:block w-64 p-8 bg-brand-600 rounded-[2.5rem] shadow-2xl text-white">
+                                    <Quote size={32} className="mb-4 opacity-50" />
+                                    <p className="text-sm font-bold leading-relaxed italic">"We deliver tech that drives business excellence."</p>
                                 </div>
                             </FadeIn>
                         </div>
-                        <div className="w-full lg:w-1/2 space-y-6">
+                        
+                        <div className="space-y-10">
                             <FadeIn direction="left">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 w-fit mb-6">
-                                    <History size={14} className="text-brand-600" />
-                                    <span className="text-brand-600 font-bold uppercase tracking-widest text-[10px]">Company History</span>
+                                <div className="inline-flex items-center gap-2 text-brand-600 font-black text-[10px] uppercase tracking-[0.3em] mb-4">
+                                    <span className="w-8 h-px bg-brand-600"></span> Our Story
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight leading-tight">Established Distribution <br/>Networks Since 2015.</h2>
-                                <p className="text-slate-500 leading-relaxed font-medium">Founded as a technical supplier for business equipment, we have spent over a decade refining our inventory to include the most reliable models in the market.</p>
-                                <div className="pt-4 grid grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <p className="text-2xl font-black text-slate-900 tracking-tighter italic">2015</p>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Establishment</p>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <p className="text-2xl font-black text-slate-900 tracking-tighter italic">2026</p>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Digital Scale</p>
-                                    </div>
+                                <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight uppercase tracking-tight">
+                                    Redefining the <br/> Tech Experience.
+                                </h2>
+                                <p className="text-slate-500 text-lg leading-relaxed font-medium">
+                                    Founded in New Orleans, we saw a gap in the market — too many people struggled to find authentic, affordable, and dependable computing and printing solutions from trusted sources. 
+                                </p>
+                                <p className="text-slate-500 text-lg leading-relaxed font-medium">
+                                    That’s why we partnered with HP, one of the world’s most respected names in innovation, to bring customers a seamless shopping experience backed by expert service.
+                                </p>
+                                <div className="pt-6">
+                                    <Link to="/contact" className="inline-flex items-center gap-4 text-slate-900 font-black text-xs uppercase tracking-widest hover:text-brand-600 transition-colors group">
+                                        Partner With Us <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+                                    </Link>
                                 </div>
                             </FadeIn>
                         </div>
                     </div>
-
-                    {/* Row 2: Commitment */}
-                    <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
-                        <div className="w-full lg:w-1/2">
-                            <FadeIn direction="left">
-                                <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-2xl">
-                                    <img src="/banner/banner-2.jpg" className="w-full h-full object-cover" alt="Product Quality" />
-                                </div>
-                            </FadeIn>
-                        </div>
-                        <div className="w-full lg:w-1/2 space-y-6">
-                            <FadeIn direction="right">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 w-fit mb-6">
-                                    <Leaf size={14} className="text-emerald-600" />
-                                    <span className="text-emerald-600 font-bold uppercase tracking-widest text-[10px]">Environmental Focus</span>
-                                </div>
-                                <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight leading-tight">Supporting Sustainable <br/>Printing Practices.</h2>
-                                <p className="text-slate-500 leading-relaxed font-medium">We prioritize hardware that supports energy-efficiency standards and manufacturer recycling programs, helping to reduce operational waste.</p>
-                                <ul className="space-y-3 pt-4">
-                                    <li className="flex items-center gap-3 text-xs font-bold text-slate-700">
-                                        <div className="w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600"><CheckCircle2 size={12}/></div>
-                                        Low-Energy Standby Modes
-                                    </li>
-                                    <li className="flex items-center gap-3 text-xs font-bold text-slate-700">
-                                        <div className="w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600"><CheckCircle2 size={12}/></div>
-                                        High-Yield Consumable Options
-                                    </li>
-                                </ul>
-                            </FadeIn>
-                        </div>
-                    </div>
-
                 </div>
             </section>
 
-            {/* --- 3. VALUES GRID --- */}
-            <section className="py-24 bg-slate-50 border-y border-slate-200">
-                <div className="container mx-auto px-6 lg:px-12">
-                    <div className="text-center mb-16">
+            {/* --- SECTION 3: THE ECOSYSTEM --- */}
+            <section className="py-24 lg:py-40 bg-slate-50 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-600/5 -skew-x-12 transform translate-x-20"></div>
+                
+                <div className="container mx-auto px-6 lg:px-12 relative z-10">
+                    <div className="max-w-3xl mb-20">
                         <FadeIn>
-                            <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight mb-4">Core Operational Standards</h2>
-                            <p className="text-slate-500 font-medium text-sm">Our catalog is curated based on three fundamental principles.</p>
+                            <h2 className="text-4xl md:text-6xl font-black text-slate-900 uppercase tracking-tighter mb-6">What We Do.</h2>
+                            <p className="text-slate-500 text-lg font-medium">Comprehensive technology distribution and management services.</p>
                         </FadeIn>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <FadeIn delay={0.1}><AboutCard icon={<ShieldCheck size={24} />} title="Authenticity" desc="All hardware and accessories are sourced through authorized manufacturer channels." /></FadeIn>
-                        <FadeIn delay={0.2}><AboutCard icon={<Eye size={24} />} title="Transparency" desc="We provide verified technical specifications to ensure accurate product matching for your needs." /></FadeIn>
-                        <FadeIn delay={0.3}><AboutCard icon={<Settings size={24} />} title="Reliability" desc="Models are selected based on consistent performance benchmarks and build quality." /></FadeIn>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <FeatureCard 
+                            icon={<Monitor size={24} />} 
+                            title="Laptops & Computers" 
+                            desc="High-performance systems for home, business, and professional use." 
+                        />
+                        <FeatureCard 
+                            icon={<Printer size={24} />} 
+                            title="Printers & Scanners" 
+                            desc="Inkjet, LaserJet, and Enterprise All-in-One models tailored to you." 
+                        />
+                        <FeatureCard 
+                            icon={<Settings size={24} />} 
+                            title="Printing Supplies" 
+                            desc="Genuine HP ink, toner, and paper for consistent professional results." 
+                        />
+                        <FeatureCard 
+                            icon={<Package size={24} />} 
+                            title="Accessories" 
+                            desc="Productivity tools, keyboards, and networking devices for your workspace." 
+                        />
+                        <FeatureCard 
+                            icon={<Zap size={24} />} 
+                            title="Business Solutions" 
+                            desc="Managed print, bulk purchase programs, and enterprise device management." 
+                        />
+                        <FeatureCard 
+                            icon={<ShieldCheck size={24} />} 
+                            title="Expert Support" 
+                            desc="Direct technical assistance for installation, troubleshooting, and repairs." 
+                        />
                     </div>
                 </div>
             </section>
 
-            {/* --- 4. DARK METRICS SECTION --- */}
-            <section className="py-24 bg-slate-900 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none"></div>
-                <div className="container mx-auto px-6 lg:px-12 relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            {/* --- SECTION 4: MISSION & VISION (CARDS) --- */}
+            <section className="py-24 lg:py-40 bg-white">
+                <div className="container mx-auto px-6 lg:px-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <FadeIn direction="right">
+                            <div className="bg-slate-950 p-12 md:p-20 rounded-[4rem] text-white h-full flex flex-col justify-center shadow-2xl relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-600/10 rounded-full blur-[100px] group-hover:bg-brand-600/20 transition-all"></div>
+                                <Target size={48} className="text-brand-600 mb-8" />
+                                <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-8">Our Mission</h3>
+                                <p className="text-slate-400 text-xl leading-relaxed font-light">
+                                    To empower every customer with reliable, efficient, and sustainable technology solutions through genuine products and a customer-first approach.
+                                </p>
+                            </div>
+                        </FadeIn>
+                        
+                        <FadeIn direction="left" delay={0.2}>
+                            <div className="bg-brand-600 p-12 md:p-20 rounded-[4rem] text-white h-full flex flex-col justify-center shadow-2xl relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[100px] group-hover:bg-white/20 transition-all"></div>
+                                <Compass size={48} className="text-white mb-8" />
+                                <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-8">Our Vision</h3>
+                                <p className="text-brand-50 text-xl leading-relaxed font-light">
+                                    To become a leading HP-partner brand in the United States, known for delivering cutting-edge technology and unmatched service excellence.
+                                </p>
+                            </div>
+                        </FadeIn>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- SECTION 5: WHY PRIME FIX --- */}
+            <section className="py-24 lg:py-40 bg-slate-50 border-y border-slate-200">
+                <div className="container mx-auto px-6 lg:px-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
                         <div>
                             <FadeIn>
-                                <Quote size={48} className="text-brand-600 mb-8 opacity-20" />
-                                <h3 className="text-2xl md:text-4xl font-bold text-white leading-relaxed mb-10">
-                                    "We provide the specialized equipment that businesses and creators need to maintain consistent productivity."
-                                </h3>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center text-white text-lg font-black">IT</div>
-                                    <div>
-                                        <p className="text-white font-bold text-xs uppercase tracking-widest">{branding.name} Logistics</p>
-                                        <p className="text-brand-500 font-bold text-[9px] uppercase tracking-widest">Inventory Management</p>
-                                    </div>
-                                </div>
+                                <h2 className="text-4xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter mb-8 leading-tight">
+                                    Why Choose <br/> <span className="text-brand-600">Prime Fix.</span>
+                                </h2>
+                                <p className="text-slate-500 font-medium leading-relaxed mb-10">
+                                    Serving customers nationwide with an uncompromising commitment to authenticity and secure logistics.
+                                </p>
+                                <Link to="/products" className="inline-flex items-center gap-4 bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-brand-600 transition-all shadow-xl">
+                                    Browse Products <ArrowRight size={16} />
+                                </Link>
                             </FadeIn>
                         </div>
-                        <div className="grid grid-cols-2 gap-6 md:gap-8">
-                            <FadeIn delay={0.1}><MetricItem icon={<Package />} label="Inventory" value="Verified" /></FadeIn>
-                            <FadeIn delay={0.2}><MetricItem icon={<Globe />} label="Shipping" value="Tracked" /></FadeIn>
-                            <FadeIn delay={0.3}><MetricItem icon={<Award />} label="Support" value="Business" /></FadeIn>
-                            <FadeIn delay={0.4}><MetricItem icon={<Zap />} label="Response" value="Prompt" /></FadeIn>
+                        
+                        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                            <WhyBox title="Authorized Partner" desc="100% genuine HP products with full manufacturer warranty." />
+                            <WhyBox title="Fast Logistics" desc="Secure packaging and tracked nationwide delivery across all 50 states." />
+                            <WhyBox title="Safe Transactions" desc="Protected shopping with encrypted payments and verified gateways." />
+                            <WhyBox title="Sustainability" desc="Promoting energy-efficient devices and green printing initiatives." />
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* --- 5. FINAL ACTION --- */}
-            <section className="py-24 bg-white">
-                <div className="container mx-auto px-6 lg:px-12">
-                    <FadeIn fullWidth>
-                        <div className="relative rounded-[3rem] bg-slate-50 border border-slate-100 overflow-hidden p-12 md:p-20 text-center group">
-                            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-600/5 rounded-full blur-[100px] group-hover:scale-150 transition-transform duration-1000"></div>
-                            <div className="relative z-10 max-w-3xl mx-auto">
-                                <h2 className="text-3xl md:text-5xl font-black text-slate-900 uppercase leading-tight mb-10 tracking-tight">Access Professional <br/><span className="text-brand-600">Equipment.</span></h2>
-                                <Link to="/products" className="group inline-flex items-center gap-4 px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-brand-600 transition-all shadow-xl shadow-slate-900/10 active:scale-95">
-                                    Browse Inventory <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                                <div className="mt-12 text-[9px] text-slate-400 font-medium leading-relaxed max-w-lg mx-auto uppercase tracking-wider">
-                                    Disclaimer: All product specifications are provided by manufacturers. Configuration and regional availability may vary.
-                                </div>
-                            </div>
+            {/* --- SECTION 6: LOCATION --- */}
+            <section className="py-24 lg:py-40 bg-white">
+                <div className="container mx-auto px-6 lg:px-12 text-center">
+                    <FadeIn>
+                        <div className="inline-flex items-center gap-3 px-4 py-2 bg-slate-100 rounded-full mb-8">
+                            <MapPin size={16} className="text-brand-600" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">New Orleans, Louisiana</span>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 uppercase tracking-tight mb-8">Serving Nationwide.</h2>
+                        <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto mb-16">
+                            Our headquarters serves as the hub for operations and logistics. We proudly ship across the United States, providing responsive support before and after your purchase.
+                        </p>
+                        
+                        <div className="flex flex-wrap justify-center gap-12 grayscale opacity-40">
+                            {['Integrity', 'Innovation', 'Excellence', 'Commitment'].map(val => (
+                                <span key={val} className="text-2xl font-black uppercase tracking-[0.25em] text-slate-400">{val}</span>
+                            ))}
                         </div>
                     </FadeIn>
                 </div>
@@ -201,21 +235,34 @@ const AboutUs = () => {
     );
 };
 
-// --- HELPER COMPONENTS ---
+// --- SUB-COMPONENTS ---
 
-const AboutCard = ({ icon, title, desc }) => (
-    <div className="p-10 rounded-[2.5rem] bg-white border border-slate-200 hover:border-brand-600/20 transition-all duration-500 group shadow-sm hover:shadow-xl">
-        <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-brand-600 group-hover:text-white transition-all mb-8 shadow-inner">{icon}</div>
-        <h3 className="text-lg font-bold uppercase tracking-tight text-slate-900 mb-4">{title}</h3>
-        <p className="text-slate-500 leading-relaxed font-medium text-xs">{desc}</p>
+const StatItem = ({ label, value }) => (
+    <div className="flex flex-col">
+        <span className="text-3xl md:text-4xl font-black text-white tracking-tighter">{value}</span>
+        <span className="text-[10px] font-bold text-brand-500 uppercase tracking-widest mt-1">{label}</span>
     </div>
 );
 
-const MetricItem = ({ icon, label, value }) => (
-    <div className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] hover:bg-white/10 transition-all group text-center lg:text-left">
-        <div className="text-brand-500 mb-4 flex justify-center lg:justify-start group-hover:scale-110 transition-transform">{icon}</div>
-        <div className="text-2xl md:text-3xl font-black italic tracking-tighter text-white leading-none mb-2">{value}</div>
-        <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500">{label}</p>
+const FeatureCard = ({ icon, title, desc }) => (
+    <div className="p-10 bg-white rounded-[3rem] border border-slate-200 hover:border-brand-600 transition-all group shadow-sm hover:shadow-2xl">
+        <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-brand-600 group-hover:text-white transition-all mb-8 shadow-inner">
+            {icon}
+        </div>
+        <h4 className="text-lg font-black uppercase tracking-tight text-slate-900 mb-4">{title}</h4>
+        <p className="text-slate-500 text-sm font-medium leading-relaxed">{desc}</p>
+    </div>
+);
+
+const WhyBox = ({ title, desc }) => (
+    <div className="flex gap-6">
+        <div className="shrink-0 w-8 h-8 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
+            <CheckCircle2 size={16} />
+        </div>
+        <div>
+            <h4 className="font-black text-slate-900 text-sm uppercase tracking-wider mb-2">{title}</h4>
+            <p className="text-slate-500 text-sm font-medium leading-relaxed">{desc}</p>
+        </div>
     </div>
 );
 

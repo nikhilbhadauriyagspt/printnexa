@@ -25,7 +25,7 @@ api.interceptors.response.use(
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             localStorage.removeItem('adminToken');
-            
+
             // Redirect to login if not already there
             if (!window.location.pathname.includes('/login')) {
                 window.location.href = '/login';

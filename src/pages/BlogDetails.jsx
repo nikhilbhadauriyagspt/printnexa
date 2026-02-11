@@ -57,7 +57,7 @@ const BlogDetails = () => {
         <div className="bg-slate-50 min-h-screen pb-32">
                         <SEO 
                             pageName={`blog_${blog.id}`}
-                            fallbackTitle={`${blog.meta_title || blog.title} | PrintNexa Insights`} 
+                            fallbackTitle={`${blog.meta_title || blog.title} | Prime Fix Solutions Insights`} 
                             fallbackDesc={blog.meta_description || blog.description}
                         />            <SchemaMarkup type="blog" data={blog} />
 
@@ -112,7 +112,7 @@ const BlogDetails = () => {
                                 </div>
                                 <div className="text-left">
                                     <p className="text-[10px] uppercase tracking-widest text-white/50 font-bold">Written by</p>
-                                    <p className="text-sm font-bold text-white">{blog.author || 'PrintNexa Editorial'}</p>
+                                    <p className="text-sm font-bold text-white">{blog.author || 'Prime Fix Solutions Editorial'}</p>
                                 </div>
                             </div>
                             <div className="h-8 w-px bg-white/10 hidden sm:block"></div>

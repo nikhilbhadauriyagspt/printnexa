@@ -87,7 +87,7 @@ const AdminBranding = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
-                
+
                 {/* Visual Identity */}
                 <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
                     <h2 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
@@ -96,44 +96,44 @@ const AdminBranding = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="md:col-span-2">
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Brand Name</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 required
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all font-bold text-gray-800"
                                 placeholder="e.g. My Awesome Store"
                                 value={formData.name}
-                                onChange={e => setFormData({...formData, name: e.target.value})}
+                                onChange={e => setFormData({ ...formData, name: e.target.value })}
                             />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Website URL</label>
-                            <input 
-                                type="url" 
+                            <input
+                                type="url"
                                 required
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all text-sm"
                                 placeholder="https://store-a.com"
                                 value={formData.url}
-                                onChange={e => setFormData({...formData, url: e.target.value})}
+                                onChange={e => setFormData({ ...formData, url: e.target.value })}
                             />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Logo URL</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all text-sm"
-                                placeholder="/logo.png or https://..."
+                                placeholder="/primefixlogo.png or https://..."
                                 value={formData.logo_url}
-                                onChange={e => setFormData({...formData, logo_url: e.target.value})}
+                                onChange={e => setFormData({ ...formData, logo_url: e.target.value })}
                             />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Favicon URL (.ico or .png)</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all text-sm"
                                 placeholder="/favicon.ico or https://..."
                                 value={formData.favicon_url}
-                                onChange={e => setFormData({...formData, favicon_url: e.target.value})}
+                                onChange={e => setFormData({ ...formData, favicon_url: e.target.value })}
                             />
                         </div>
                     </div>
@@ -148,32 +148,32 @@ const AdminBranding = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Customer Support Email</label>
-                            <input 
-                                type="email" 
+                            <input
+                                type="email"
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all"
                                 placeholder="support@store.com"
                                 value={formData.contact_email}
-                                onChange={e => setFormData({...formData, contact_email: e.target.value})}
+                                onChange={e => setFormData({ ...formData, contact_email: e.target.value })}
                             />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Support Phone Number</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all"
                                 placeholder="+91 98765 43210"
                                 value={formData.phone}
-                                onChange={e => setFormData({...formData, phone: e.target.value})}
+                                onChange={e => setFormData({ ...formData, phone: e.target.value })}
                             />
                         </div>
                         <div className="md:col-span-2">
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Physical Address</label>
-                            <textarea 
+                            <textarea
                                 rows="2"
                                 className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all"
                                 placeholder="123 Store St, City, Country"
                                 value={formData.contact_address}
-                                onChange={e => setFormData({...formData, contact_address: e.target.value})}
+                                onChange={e => setFormData({ ...formData, contact_address: e.target.value })}
                             />
                         </div>
                     </div>
@@ -187,40 +187,40 @@ const AdminBranding = () => {
                         </h2>
                         <label className="flex items-center gap-2 cursor-pointer">
                             <span className="text-[10px] font-black uppercase text-gray-400">SSL/TLS Security</span>
-                            <input 
-                                type="checkbox" 
-                                className="w-4 h-4 text-teal-600" 
+                            <input
+                                type="checkbox"
+                                className="w-4 h-4 text-teal-600"
                                 checked={formData.smtp_secure}
-                                onChange={e => setFormData({...formData, smtp_secure: e.target.checked})}
+                                onChange={e => setFormData({ ...formData, smtp_secure: e.target.checked })}
                             />
                         </label>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">SMTP Host</label>
-                            <input type="text" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="smtp.gmail.com" value={formData.smtp_host} onChange={e => setFormData({...formData, smtp_host: e.target.value})} />
+                            <input type="text" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="smtp.gmail.com" value={formData.smtp_host} onChange={e => setFormData({ ...formData, smtp_host: e.target.value })} />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">SMTP Port</label>
-                            <input type="number" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="465" value={formData.smtp_port} onChange={e => setFormData({...formData, smtp_port: e.target.value})} />
+                            <input type="number" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="465" value={formData.smtp_port} onChange={e => setFormData({ ...formData, smtp_port: e.target.value })} />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">SMTP Username</label>
-                            <input type="text" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="your-email@gmail.com" value={formData.smtp_user} onChange={e => setFormData({...formData, smtp_user: e.target.value})} />
+                            <input type="text" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="your-email@gmail.com" value={formData.smtp_user} onChange={e => setFormData({ ...formData, smtp_user: e.target.value })} />
                         </div>
                         <div>
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">SMTP Password / App Key</label>
-                            <input type="password" placeholder="••••••••••••" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" value={formData.smtp_pass} onChange={e => setFormData({...formData, smtp_pass: e.target.value})} />
+                            <input type="password" placeholder="••••••••••••" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" value={formData.smtp_pass} onChange={e => setFormData({ ...formData, smtp_pass: e.target.value })} />
                         </div>
                         <div className="md:col-span-2">
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">"From" Email Address</label>
-                            <input type="email" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="PrintNova <noreply@printnova.shop>" value={formData.from_email} onChange={e => setFormData({...formData, from_email: e.target.value})} />
+                            <input type="email" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white" placeholder="Prime Fix Solutions <noreply@primefixsolutions.shop>" value={formData.from_email} onChange={e => setFormData({ ...formData, from_email: e.target.value })} />
                         </div>
                     </div>
                 </div>
 
                 <div className="flex justify-end pt-4">
-                    <button 
+                    <button
                         disabled={saving}
                         className="bg-gray-900 text-white px-12 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-teal-600 transition-all shadow-xl hover:shadow-teal-900/20 disabled:bg-gray-200"
                     >

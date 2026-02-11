@@ -16,7 +16,7 @@ const SchemaMarkup = ({ type, data }) => {
             "sku": `PN-${data.id}`,
             "brand": {
                 "@type": "Brand",
-                "name": "PrintNova"
+                "name": "Prime Fix Solutions"
             },
             "offers": {
                 "@type": "Offer",
@@ -70,10 +70,10 @@ const SchemaMarkup = ({ type, data }) => {
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "PrintNova",
+                "name": "Prime Fix Solutions",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": `${domain}/logo.png`
+                    "url": `${domain}/primefixlogo.png`
                 }
             },
             "datePublished": data.created_at

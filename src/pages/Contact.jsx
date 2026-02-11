@@ -7,9 +7,9 @@ import { FadeIn } from '../components/Reveal';
 
 const Contact = () => {
     const [branding, setBranding] = useState({
-        name: 'PrintNexa',
-        contact_email: '',
-        contact_address: '',
+        name: 'Prime Fix Solutions',
+        contact_email: 'primefixsolutions.us@outlook.com',
+        contact_address: '3014 Dauphine st ste A PM3 357287 New Orleans, Louisiana 70117-6755 US',
         phone: '',
         logo_url: ''
     });

@@ -44,6 +44,11 @@ import Wishlist from './pages/Wishlist';
 import MyOrders from './pages/MyOrders';
 import UserProfile from './pages/UserProfile';
 import AboutUs from './pages/AboutUs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import CookiePolicy from './pages/CookiePolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
+import ShippingPolicy from './pages/ShippingPolicy';
+import ReturnPolicy from './pages/ReturnPolicy';
 import PolicyPage from './pages/PolicyPage';
 import NotFound from './pages/NotFound';
 import './App.css';
@@ -195,6 +200,11 @@ function App() {
                 <Route path="/orders" element={<MyOrders />} />
                 <Route path="/profile" element={<UserProfile />} />
                 <Route path="/settings" element={<UserProfile />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                <Route path="/shipping-policy" element={<ShippingPolicy />} />
+                <Route path="/refund-policy" element={<ReturnPolicy />} />
                 <Route path="/pages/:type" element={<PolicyPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

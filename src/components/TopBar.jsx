@@ -5,7 +5,7 @@ import { Phone, Mail, ShieldCheck, Globe } from 'lucide-react';
 
 const TopBar = () => {
     const [branding, setBranding] = useState({
-        contact_email: 'support@PrintNexa.shop',
+        contact_email: 'support@primefixsolutions.shop',
         phone: '+1 (555) 123-4567'
     });
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://PrintNexa.shop/sitemap.xml
+Sitemap: http://primefixsolutions.shop/sitemap.xml

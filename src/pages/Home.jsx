@@ -45,6 +45,18 @@ const Home = () => {
     const [products, setProducts] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [slideIndex1, setSlideIndex1] = useState(0);
+    const [slideIndex2, setSlideIndex2] = useState(0);
+
+    useEffect(() => {
+        if (products.length > 5) {
+            const timer = setInterval(() => {
+                setSlideIndex1(prev => (prev + 1) % Math.min(4, Math.max(1, Math.floor(products.length / 2))));
+                setSlideIndex2(prev => (prev + 1) % Math.min(4, Math.max(1, Math.floor(products.length / 2))));
+            }, 4000);
+            return () => clearInterval(timer);
+        }
+    }, [products.length]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -68,7 +80,7 @@ const Home = () => {
 
     const bestSellers = products.filter(p => p.is_best_selling).slice(0, 4);
     const archiveDeals = products.filter(p => parseFloat(p.mrp) > parseFloat(p.price)).slice(0, 4);
-    const newArrivals = [...products].sort((a, b) => b.id - a.id).slice(0, 8);
+    const newArrivals = [...products].sort((a, b) => b.id - a.id).slice(0, 15);
 
     const brands = [
         { name: 'HP' }, { name: 'Epson' }, { name: 'Canon' },
@@ -81,7 +93,7 @@ const Home = () => {
 
     return (
         <div className="bg-white min-h-screen relative font-sans selection:bg-brand-600 selection:text-white overflow-hidden">
-            <SEO pageName="home" fallbackTitle="PrintNexa - Printers & Accessories" fallbackDesc="Browse our catalog of professional printers and supplies." />
+            <SEO pageName="home" fallbackTitle="Prime Fix Solutions - Printers & Accessories" fallbackDesc="Browse our catalog of professional printers and supplies." />
 
             {/* 1. HERO SECTION */}
             <HeroCinematic />
@@ -188,7 +200,7 @@ const Home = () => {
                         </div>
                     </FadeIn>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-6 h-auto md:h-[600px]">
+                    <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[700px]">
                         {isLoading ? (
                             <>
                                 <div className="md:col-span-2 md:row-span-2"><Skeleton className="h-full rounded-[2.5rem]" /></div>
@@ -197,52 +209,110 @@ const Home = () => {
                             </>
                         ) : (
                             <>
+                                {/* Left Featured Box - 10 Line Description */}
                                 {products[0] && (
-                                    <div className="md:col-span-2 md:row-span-2 bg-slate-50 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group border border-slate-100 hover:border-brand-200 transition-colors">
-                                        <div className="absolute top-0 right-0 w-2/3 h-full bg-white rounded-l-[100px] -mr-20 z-0 group-hover:bg-brand-50/30 transition-colors duration-500"></div>
-                                        <div className="relative z-10 h-full flex flex-col justify-between items-start">
-                                            <div>
-                                                <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 inline-block">Featured</span>
-                                                <h3 className="text-2xl md:text-3xl font-black uppercase text-slate-900 mb-2 line-clamp-2">{products[0].name}</h3>
-                                                <p className="text-slate-500 text-sm font-medium max-w-xs leading-relaxed line-clamp-2">{products[0].description}</p>
+                                    <Link
+                                        to={`/product/${products[0].slug}`}
+                                        className="md:col-span-2 md:row-span-2 bg-slate-50 rounded-[3rem] p-8 md:p-16 relative overflow-hidden group border border-slate-100 hover:border-brand-200 transition-all duration-500 block"
+                                    >
+                                        <div className="absolute top-0 right-0 w-1/2 h-full bg-white rounded-l-[120px] -mr-16 z-0 group-hover:bg-brand-50/50 transition-colors duration-700"></div>
+                                        <div className="relative z-10 h-full flex flex-col justify-center items-start">
+                                            <div className="max-w-md">
+                                                <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full text-[9px] font-black uppercase tracking-widest mb-6">
+                                                    Featured Collection
+                                                </div>
+                                                <h3 className="text-3xl  font-black uppercase text-slate-900 mb-6 leading-[1.1] tracking-tight">{products[0].name}</h3>
+                                                <p className="text-slate-500 text-sm md:text-base font-medium leading-[1.8] mb-8 line-clamp-[10]">
+                                                    {products[0].description || "Professional printing technology designed for high-performance business environments and creative workspaces. This unit delivers consistent output quality, advanced network integration capabilities, and efficient resource management for demanding workflows. Experience the next generation of office hardware with our latest featured series, engineered for reliability and precision in every task. Optimized for both speed and detail, it ensures that your documents maintain the highest professional standards while minimizing operational overhead and maintenance requirements."}
+                                                </p>
+                                                <div className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.2em] text-brand-600 group-hover:gap-5 transition-all">
+                                                    Explore Product <ArrowUpRight size={16} />
+                                                </div>
                                             </div>
-                                            <Link to={`/product/${products[0].slug}`} className="mt-8 flex items-center gap-3 text-xs font-black uppercase tracking-widest text-slate-900 hover:text-brand-600 transition-colors">Shop Now <ArrowUpRight size={14} /></Link>
                                         </div>
-                                        <img
-                                            className="absolute bottom-10 right-0 w-1/2 h-1/2 object-contain mix-blend-multiply translate-x-12 translate-y-12 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-700"
-                                            src={products[0].image_url?.startsWith('http') ? products[0].image_url : `/products/${products[0].image_url}`}
-                                            alt={products[0].name}
-                                        />
-                                    </div>
+                                        <div className="absolute bottom-12 right-12 w-1/3 h-1/3 z-10 pointer-events-none">
+                                            <img
+                                                className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-1000"
+                                                src={products[0].image_url?.startsWith('http') ? products[0].image_url : `/products/${products[0].image_url}`}
+                                                alt={products[0].name}
+                                            />
+                                        </div>
+                                    </Link>
                                 )}
 
-                                {products[1] && (
-                                    <FadeIn delay={0.2} className="h-full">
-                                        <Link to={`/product/${products[1].slug}`} className="bg-white rounded-[2.5rem] p-8 border border-slate-100 hover:border-brand-200 transition-colors h-full flex flex-col justify-center relative group overflow-hidden block">
-                                            <h4 className="text-xl font-bold uppercase text-slate-900 relative z-10 line-clamp-2">{products[1].name}</h4>
-                                            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-4 relative z-10">{products[1].category_name || 'Electronics'}</p>
-                                            <img 
-                                                src={products[1].image_url?.startsWith('http') ? products[1].image_url : `/products/${products[1].image_url}`} 
-                                                className="absolute bottom-4 right-4 w-32 h-32 object-contain group-hover:scale-110 transition-transform duration-500" 
-                                                alt={products[1].name} 
-                                            />
-                                        </Link>
-                                    </FadeIn>
-                                )}
+                                {/* Right Slider 1 */}
+                                <div className="relative rounded-[3rem] overflow-hidden border border-slate-100 bg-white group h-full transition-all duration-500 hover:shadow-xl">
+                                    <AnimatePresence mode="wait">
+                                        {products.length > 1 && products.slice(1, 5).map((product, idx) => (
+                                            idx === slideIndex1 && (
+                                                <motion.div
+                                                    key={product.id}
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                    transition={{ duration: 0.5 }}
+                                                    className="h-full w-full"
+                                                >
+                                                    <Link to={`/product/${product.slug}`} className="h-full flex flex-col p-8 md:p-10 relative block">
+                                                        <div className="relative z-20">
+                                                            <p className="text-[10px] font-black text-brand-500 uppercase tracking-[0.2em] mb-2">{product.category_name || 'Essentials'}</p>
+                                                            <h4 className="text-xl font-black uppercase text-slate-900 leading-tight mb-4 line-clamp-2">{product.name}</h4>
+                                                        </div>
+                                                        <div className="flex-1 flex items-center justify-center p-4 relative z-10 overflow-hidden">
+                                                            <img
+                                                                src={product.image_url?.startsWith('http') ? product.image_url : `/products/${product.image_url}`}
+                                                                className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-110 transition-transform duration-700"
+                                                                alt={product.name}
+                                                            />
+                                                        </div>
+                                                        <div className="flex gap-1.5 mt-4">
+                                                            {[0, 1, 2, 3].map(i => (
+                                                                <div key={i} className={`h-1 rounded-full transition-all duration-300 ${i === slideIndex1 ? 'w-8 bg-brand-500' : 'w-2 bg-slate-100'}`} />
+                                                            ))}
+                                                        </div>
+                                                    </Link>
+                                                </motion.div>
+                                            )
+                                        ))}
+                                    </AnimatePresence>
+                                </div>
 
-                                {products[2] && (
-                                    <FadeIn delay={0.3} className="h-full">
-                                        <Link to={`/product/${products[2].slug}`} className="bg-slate-900 rounded-[2.5rem] p-8 border border-slate-800 hover:border-brand-900 transition-colors h-full flex flex-col justify-center relative group overflow-hidden block">
-                                            <h4 className="text-xl font-bold uppercase text-white relative z-10 line-clamp-2">{products[2].name}</h4>
-                                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4 relative z-10">{products[2].category_name || 'Accessories'}</p>
-                                            <img 
-                                                src={products[2].image_url?.startsWith('http') ? products[2].image_url : `/products/${products[2].image_url}`} 
-                                                className="absolute bottom-4 right-4 w-32 h-32 object-contain group-hover:scale-110 transition-transform duration-500" 
-                                                alt={products[2].name} 
-                                            />
-                                        </Link>
-                                    </FadeIn>
-                                )}
+                                {/* Right Slider 2 */}
+                                <div className="relative rounded-[3rem] overflow-hidden border border-slate-900 bg-slate-950 group h-full transition-all duration-500 hover:shadow-2xl">
+                                    <AnimatePresence mode="wait">
+                                        {products.length > 5 && products.slice(5, 9).map((product, idx) => (
+                                            idx === slideIndex2 && (
+                                                <motion.div
+                                                    key={product.id}
+                                                    initial={{ opacity: 0, y: 15 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -15 }}
+                                                    transition={{ duration: 0.5 }}
+                                                    className="h-full w-full"
+                                                >
+                                                    <Link to={`/product/${product.slug}`} className="h-full flex flex-col p-8 md:p-10 relative block">
+                                                        <div className="relative z-20">
+                                                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">{product.category_name || 'Premium'}</p>
+                                                            <h4 className="text-xl font-black uppercase text-white leading-tight mb-4 line-clamp-2">{product.name}</h4>
+                                                        </div>
+                                                        <div className="flex-1 flex items-center justify-center p-4 relative z-10 overflow-hidden">
+                                                            <img
+                                                                src={product.image_url?.startsWith('http') ? product.image_url : `/products/${product.image_url}`}
+                                                                className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-110 transition-transform duration-700 brightness-110"
+                                                                alt={product.name}
+                                                            />
+                                                        </div>
+                                                        <div className="flex gap-1.5 mt-4">
+                                                            {[0, 1, 2, 3].map(i => (
+                                                                <div key={i} className={`h-1 rounded-full transition-all duration-300 ${i === slideIndex2 ? 'w-8 bg-brand-500' : 'w-2 bg-white/10'}`} />
+                                                            ))}
+                                                        </div>
+                                                    </Link>
+                                                </motion.div>
+                                            )
+                                        ))}
+                                    </AnimatePresence>
+                                </div>
                             </>
                         )}
                     </div>
@@ -265,9 +335,9 @@ const Home = () => {
                             <Link to="/products" className="px-10 py-5 bg-[#0f172a] text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-brand-600 transition-all border border-slate-800">Explore Store</Link>
                         </div>
                     </FadeIn>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         {isLoading ? (
-                            [1, 2, 3, 4].map(i => <Skeleton key={i} className="aspect-[4/5] rounded-[3rem]" />)
+                            [1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="aspect-[3/4] rounded-[2rem]" />)
                         ) : (
                             newArrivals.map((product, idx) => (
                                 <FadeIn key={product.id} delay={idx * 0.05}>
@@ -275,8 +345,7 @@ const Home = () => {
                                 </FadeIn>
                             ))
                         )}
-                    </div>
-                </div>
+                    </div>                </div>
             </section>
 
             {/* 8. WORK & CREATIVE - Dynamic Categories */}
@@ -450,20 +519,22 @@ const PremiumProductCard = ({ product, dark, horizontal }) => {
     }
 
     return (
-        <motion.div whileHover={{ y: -10 }} className={`group relative flex flex-col ${dark ? 'text-white' : 'text-slate-900'}`}>
-            <div className={`relative aspect-[4/5] ${dark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-100'} border rounded-[3rem] overflow-hidden m-1 p-8 flex items-center justify-center transition-all duration-700`}>
-                {parseFloat(product.mrp) > parseFloat(product.price) && <span className="absolute top-6 left-6 px-3 py-1 bg-rose-600 text-white text-[9px] font-bold uppercase tracking-widest rounded-lg z-10 shadow-lg">Special</span>}
-                <Link to={`/product/${product.slug}`} className="w-full h-full flex items-center justify-center relative z-0"><img src={imageUrl} alt={product.name} className="w-full h-full object-contain mix-blend-multiply transition-transform duration-[2000ms] group-hover:scale-110" /></Link>
-                <div className="absolute top-6 right-6 flex flex-col gap-3 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 z-10">
-                    <button onClick={(e) => { e.preventDefault(); toggleWishlist(product); }} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all border border-slate-100 bg-white ${activeWishlist ? 'text-brand-500' : 'text-neutral-400 hover:text-brand-600'} shadow-md`}><Heart size={16} className={activeWishlist ? 'fill-current' : ''} /></button>
-                    <Link to={`/product/${product.slug}`} className="w-10 h-10 rounded-full bg-white border border-slate-100 text-neutral-400 hover:text-brand-600 flex items-center justify-center transition-all shadow-md"><ArrowUpRight size={16} /></Link>
+        <motion.div whileHover={{ y: -5 }} className={`group relative flex flex-col ${dark ? 'text-white' : 'text-slate-900'}`}>
+            <div className={`relative aspect-[3/4] ${dark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-100'} border rounded-[2rem] overflow-hidden m-0.5 p-6 flex items-center justify-center transition-all duration-700`}>
+                {parseFloat(product.mrp) > parseFloat(product.price) && <span className="absolute top-4 left-4 px-2 py-0.5 bg-rose-600 text-white text-[8px] font-bold uppercase tracking-widest rounded-md z-10 shadow-lg">Special</span>}
+                <Link to={`/product/${product.slug}`} className="w-full h-full flex items-center justify-center relative z-0 p-2"><img src={imageUrl} alt={product.name} className="w-full h-full object-contain mix-blend-multiply transition-transform duration-[2000ms] group-hover:scale-110" /></Link>
+                <div className="absolute top-4 right-4 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 z-10">
+                    <button onClick={(e) => { e.preventDefault(); toggleWishlist(product); }} className={`w-8 h-8 rounded-full flex items-center justify-center transition-all border border-slate-100 bg-white ${activeWishlist ? 'text-brand-500' : 'text-neutral-400 hover:text-brand-600'} shadow-md`}><Heart size={14} className={activeWishlist ? 'fill-current' : ''} /></button>
+                    <Link to={`/product/${product.slug}`} className="w-8 h-8 rounded-full bg-white border border-slate-100 text-neutral-400 hover:text-brand-600 flex items-center justify-center transition-all shadow-md"><ArrowUpRight size={14} /></Link>
                 </div>
-                <div className="absolute inset-x-6 bottom-6 transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-10 shadow-2xl shadow-black/20"><button onClick={handleAddToCart} className={`w-full py-4 rounded-2xl flex items-center justify-center gap-3 font-bold text-[9px] uppercase tracking-widest transition-all ${isAdded ? 'bg-emerald-500 text-white' : 'bg-brand-600 text-white hover:bg-brand-500'}`}>{isAdded ? <CheckCircle2 size={14} /> : <><ShoppingBag size={14} /> Add to Cart</>}</button></div>
+                <div className="absolute inset-x-4 bottom-4 transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-10"><button onClick={handleAddToCart} className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[8px] uppercase tracking-widest transition-all shadow-xl ${isAdded ? 'bg-emerald-500 text-white' : 'bg-brand-600 text-white hover:bg-brand-500'}`}>{isAdded ? <CheckCircle2 size={12} /> : <><ShoppingBag size={12} /> Add</>}</button></div>
             </div>
-            <div className="mt-6 px-4 flex flex-col items-center text-center">
-                <p className={`text-[9px] font-bold ${dark ? 'text-brand-400' : 'text-brand-600'} uppercase tracking-[0.3em] mb-2`}>{product.category_name || 'Series'}</p>
-                <Link to={`/product/${product.slug}`}><h3 className="text-lg font-bold uppercase tracking-tight group-hover:text-brand-600 transition-colors line-clamp-1 mb-3">{product.name}</h3></Link>
-                <div className="flex items-center gap-3"><span className={`text-xl font-bold italic tracking-tighter ${dark ? 'text-white' : 'text-slate-900'}`}>${product.price}</span></div>
+            <div className="mt-4 px-2 flex flex-col items-center text-center">
+                <p className={`text-[8px] font-black ${dark ? 'text-brand-400' : 'text-brand-600'} uppercase tracking-[0.2em] mb-1.5`}>{product.category_name || 'Series'}</p>
+                <Link to={`/product/${product.slug}`} className="min-h-[2.5rem] flex items-center justify-center">
+                    <h3 className="text-sm font-bold uppercase tracking-tight group-hover:text-brand-600 transition-colors line-clamp-2 mb-2">{product.name}</h3>
+                </Link>
+                <div className="flex items-center gap-2 mt-2"><span className={`text-base font-black italic tracking-tighter ${dark ? 'text-white' : 'text-slate-900'}`}>${product.price}</span></div>
             </div>
         </motion.div>
     );

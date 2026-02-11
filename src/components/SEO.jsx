@@ -5,13 +5,13 @@ import api from '../api/api';
 const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' }) => {
     const [seo, setSeo] = useState(null);
     const [favicon, setFavicon] = useState('/logo/fabicon.png');
-    const [siteLogo, setSiteLogo] = useState('/logo/logo.png');
-    const domain = 'https://PrintNexa.shop'; // Default production domain
+    const [siteLogo, setSiteLogo] = useState('/logo/primefixlogo.png');
+    const domain = 'http://primefixsolutions.shop'; // Default production domain
     const currentUrl = window.location.href.replace(window.location.origin, domain);
 
     useEffect(() => {
         let isMounted = true;
-        
+
         const fetchSEO = async () => {
             const websiteId = import.meta.env.VITE_WEBSITE_ID || 1;
             try {
@@ -43,7 +43,7 @@ const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' })
         };
 
         fetchSEO();
-        
+
         return () => { isMounted = false; };
     }, [pageName, fallbackTitle, fallbackDesc]);
 
@@ -61,7 +61,7 @@ const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' })
         }
     }, [favicon]);
 
-    const title = seo?.meta_title || fallbackTitle || 'PrintNexa';
+    const title = seo?.meta_title || fallbackTitle || 'Prime Fix Solutions';
     const description = seo?.meta_description || fallbackDesc || '';
     const metaImage = image || siteLogo;
 
@@ -78,7 +78,7 @@ const SEO = ({ pageName, fallbackTitle, fallbackDesc, image, type = 'website' })
             <meta property="og:image" content={metaImage} />
             <meta property="og:url" content={currentUrl} />
             <meta property="og:type" content={type} />
-            <meta property="og:site_name" content="PrintNexa" />
+            <meta property="og:site_name" content="Prime Fix Solutions" />
 
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={description} />

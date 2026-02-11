@@ -38,8 +38,8 @@ const Navbar = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
     const [branding, setBranding] = useState({
-        name: 'PrintNexa',
-        logo_url: '/logo/logo.png' // Default static logo
+        name: 'Prime Fix Solutions',
+        logo_url: '/logo/primefixlogo.png' // Default static logo
     });
 
     const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Navbar = () => {
                 setBranding(prev => ({
                     ...prev,
                     ...res.data,
-                    logo_url: res.data.logo_url || '/logo/logo.png'
+                    logo_url: res.data.logo_url || '/logo/primefixlogo.png'
                 }));
             }
         }).catch(() => { });
@@ -92,10 +92,10 @@ const Navbar = () => {
                         >
                             <div className="flex justify-between items-center mb-12">
                                 <img
-                                    src={branding.logo_url || '/logo/logo.png'}
+                                    src={branding.logo_url || '/logo/primefixlogo.png'}
                                     alt={branding.name}
                                     className="h-14 w-auto"
-                                    onError={(e) => { e.target.src = '/logo/logo.png'; }}
+                                    onError={(e) => { e.target.src = '/logo/primefixlogo.png'; }}
                                 />
                                 <X size={24} onClick={() => setIsMenuOpen(false)} />
                             </div>
@@ -120,10 +120,10 @@ const Navbar = () => {
                             {/* 1. Logo Section */}
                             <Link to="/" className="shrink-0">
                                 <img
-                                    src={branding.logo_url || '/logo/logo.png'}
+                                    src={branding.logo_url || '/logo/primefixlogo.png'}
                                     alt={branding.name}
                                     className="h-14 w-auto"
-                                    onError={(e) => { e.target.src = '/logo/logo.png'; }}
+                                    onError={(e) => { e.target.src = '/logo/primefixlogo.png'; }}
                                 />
                             </Link>
 
@@ -287,17 +287,20 @@ const Navbar = () => {
                                 <NavLink to="/contact" label="Contact" active={location.pathname === '/contact'} />
                             </nav>
 
-                            {/* Right Side: Fully Rounded Capsule Button */}
-                            <div className="flex justify-end">
-                                <Link to="/contact" className="group flex items-center gap-3 bg-[#0f172a] text-white pl-1.5 pr-5 py-1.5 rounded-full hover:bg-brand-600 transition-all shadow-lg shadow-slate-900/10">
-                                    <div className="w-9 h-9 bg-brand-500 rounded-full flex items-center justify-center text-white brand-shadow group-hover:bg-white group-hover:text-brand-600 transition-all">
-                                        <Phone size={16} fill="currentColor" />
+                            {/* Right Side: HP Authorized Badge */}
+                            <div className="flex justify-end items-center">
+                                <div className="flex items-center gap-4 bg-slate-100 border border-slate-200 pl-2 pr-6 py-2 rounded-full">
+                                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1.5 shadow-sm">
+                                        <img src="/logo/hp-logo.png" alt="HP Logo" className="w-full h-full object-contain" />
                                     </div>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.15em]">Direct Support</span>
-                                    <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all">
-                                        <ArrowUpRight size={14} />
+                                    <div className="flex flex-col">
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse"></span>
+                                            <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none">Official</span>
+                                        </div>
+                                        <span className="text-[11px] font-black text-slate-900 uppercase tracking-[0.1em] mt-0.5">HP Authorized Partner</span>
                                     </div>
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -308,15 +311,14 @@ const Navbar = () => {
 };
 
 const NavLink = ({ to, label, active }) => (
-    <Link 
-        to={to} 
-        className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all relative flex items-center gap-2 group ${
-            active ? 'text-white' : 'text-slate-500 hover:text-slate-900'
-        }`}
+    <Link
+        to={to}
+        className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all relative flex items-center gap-2 group ${active ? 'text-white' : 'text-slate-500 hover:text-slate-900'
+            }`}
     >
         <span className="relative z-10">{label}</span>
         {active && (
-            <motion.div 
+            <motion.div
                 layoutId="active-pill"
                 className="absolute inset-0 bg-[#0f172a] rounded-full shadow-lg shadow-slate-900/20"
                 transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}

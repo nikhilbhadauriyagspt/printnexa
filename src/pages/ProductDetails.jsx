@@ -7,8 +7,8 @@ import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import toast from 'react-hot-toast';
 import Skeleton from '../components/Skeleton';
-import { 
-    Star, ShoppingBag, Heart, ShieldCheck, Truck, 
+import {
+    Star, ShoppingBag, Heart, ShieldCheck, Truck,
     Minus, Plus, ChevronRight, Zap, RotateCcw,
     CheckCircle2, ArrowRight, Award, Globe, ArrowUpRight
 } from 'lucide-react';
@@ -19,7 +19,7 @@ const ProductDetails = () => {
     const navigate = useNavigate();
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist: checkWishlist } = useWishlist();
-    
+
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
@@ -38,7 +38,7 @@ const ProductDetails = () => {
                 const related = allProducts
                     .filter(p => p.category_name === productRes.data.category_name && p.id !== productRes.data.id)
                     .slice(0, 4);
-                
+
                 setRelatedProducts(related.length === 0 ? allProducts.filter(p => p.id !== productRes.data.id).slice(0, 4) : related);
 
             } catch (error) {
@@ -67,7 +67,7 @@ const ProductDetails = () => {
                         <Skeleton className="h-4 w-64 bg-white/10 rounded-full" />
                     </div>
                 </div>
-                
+
                 <div className="container mx-auto px-6 -mt-8 relative z-20">
                     <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
                         {/* Left Skeleton */}
@@ -122,24 +122,24 @@ const ProductDetails = () => {
 
             <div className="container mx-auto px-6 -mt-8 relative z-20">
                 <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
-                    
+
                     {/* --- LEFT: VISUAL ASSET --- */}
                     <div className="w-full lg:w-1/2 lg:sticky lg:top-32">
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             className="bg-neutral-50 rounded-[4rem] p-12 lg:p-20 flex items-center justify-center relative group border border-neutral-100 shadow-inner"
                         >
-                            <img 
-                                src={imageUrl} 
-                                alt={product.name} 
-                                className="w-full max-h-[550px] object-contain mix-blend-multiply transition-transform duration-[2000ms] group-hover:scale-110" 
+                            <img
+                                src={imageUrl}
+                                alt={product.name}
+                                className="w-full max-h-[550px] object-contain mix-blend-multiply transition-transform duration-[2000ms] group-hover:scale-110"
                             />
-                            
+
                             {/* Actions Overlay */}
                             <div className="absolute top-10 right-10 flex flex-col gap-4">
-                                <button 
-                                    onClick={() => toggleWishlist(product)} 
+                                <button
+                                    onClick={() => toggleWishlist(product)}
                                     className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all border shadow-xl ${activeWishlist ? 'bg-brand-500 border-brand-500 text-white' : 'bg-white border-neutral-100 text-neutral-400 hover:text-brand-600'}`}
                                 >
                                     <Heart size={22} className={activeWishlist ? 'fill-current' : ''} />
@@ -175,7 +175,7 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                             <h1 className="text-3xl md:text-5xl font-serif text-neutral-900 leading-tight mb-8 tracking-tighter">{product.name}</h1>
-                            
+
                             <div className="flex items-end gap-4 mb-10">
                                 <span className="text-5xl font-black text-neutral-900 tracking-tighter">${product.price}</span>
                                 {parseFloat(product.mrp) > parseFloat(product.price) && (
@@ -192,21 +192,21 @@ const ProductDetails = () => {
                         <div className="space-y-8 pb-12 border-b border-neutral-100">
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex items-center bg-neutral-50 border border-neutral-100 rounded-2xl h-16 w-full sm:w-40 p-2 shadow-inner">
-                                    <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-full flex items-center justify-center hover:bg-white rounded-xl transition-all text-neutral-400"><Minus size={18}/></button>
+                                    <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-full flex items-center justify-center hover:bg-white rounded-xl transition-all text-neutral-400"><Minus size={18} /></button>
                                     <span className="flex-1 text-center font-black text-neutral-900 text-lg">{quantity}</span>
-                                    <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-full flex items-center justify-center hover:bg-white rounded-xl transition-all text-neutral-400"><Plus size={18}/></button>
+                                    <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-full flex items-center justify-center hover:bg-white rounded-xl transition-all text-neutral-400"><Plus size={18} /></button>
                                 </div>
-                                <button 
+                                <button
                                     onClick={handleAddToCart}
                                     disabled={product.stock <= 0}
                                     className="flex-[2] h-16 bg-brand-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-neutral-900 transition-all flex items-center justify-center gap-3 gold-shadow disabled:bg-neutral-200"
                                 >
-                                    <ShoppingBag size={20} /> {product.stock > 0 ? 'Acquire Unit' : 'Sold Out'}
+                                    <ShoppingBag size={20} /> {product.stock > 0 ? 'Add To Cart' : 'Sold Out'}
                                 </button>
                             </div>
 
                             {product.stock > 0 && (
-                                <button 
+                                <button
                                     onClick={() => { handleAddToCart(); navigate('/checkout'); }}
                                     className="w-full h-16 border-2 border-neutral-950 text-neutral-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-neutral-950 hover:text-white transition-all flex items-center justify-center gap-3 group"
                                 >
@@ -218,7 +218,7 @@ const ProductDetails = () => {
                         {/* TRUST GRID */}
                         <div className="grid grid-cols-2 gap-10 mt-12">
                             <TrustModule icon={<Truck size={22} />} title="Global Logistics" desc="Secured transit protocol" />
-                            <TrustModule icon={<ShieldCheck size={22} />} title="Elite Warranty" desc="2-Year full coverage" />
+                            <TrustModule icon={<RotateCcw size={22} />} title="7-Day Returns" desc="Guaranteed easy returns" />
                             <TrustModule icon={<Award size={22} />} title="Certified Origin" desc="100% Authentic hardware" />
                             <TrustModule icon={<Globe size={22} />} title="Cloud Support" desc="24/7 technical concierge" />
                         </div>
@@ -228,37 +228,36 @@ const ProductDetails = () => {
                 {/* --- DATA TABS SECTION --- */}
                 <div className="mt-32 border-t border-neutral-100 pt-20">
                     <div className="flex justify-center gap-12 mb-16">
-                        {['Description', 'Specifications', 'Shipping', 'Support'].map(tab => (
-                            <button 
+                        {['Description', 'Specifications', 'Support'].map(tab => (
+                            <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab.toLowerCase())}
-                                className={`pb-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all relative ${
-                                    activeTab === tab.toLowerCase() 
-                                    ? 'text-brand-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-brand-600' 
-                                    : 'text-neutral-300 hover:text-neutral-500'
-                                }`}
+                                className={`pb-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all relative ${activeTab === tab.toLowerCase()
+                                        ? 'text-brand-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-brand-600'
+                                        : 'text-neutral-300 hover:text-neutral-500'
+                                    }`}
                             >
                                 {tab}
                             </button>
                         ))}
                     </div>
-                    
+
                     <div className="max-w-4xl mx-auto">
                         <AnimatePresence mode='wait'>
                             {activeTab === 'description' && (
-                                <motion.div 
+                                <motion.div
                                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                                     className="prose max-w-none text-neutral-500 leading-relaxed font-light text-lg"
                                 >
                                     <p className="mb-6">{product.description}</p>
                                     <p>
-                                        Engineered for high-performance environments, this {product.category_name} unit represents the pinnacle of current hardware logic. 
+                                        Engineered for high-performance environments, this {product.category_name} unit represents the pinnacle of current hardware logic.
                                         Every component has been validated for professional endurance and aesthetic integration.
                                     </p>
                                 </motion.div>
                             )}
                             {activeTab === 'specifications' && (
-                                <motion.div 
+                                <motion.div
                                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                                     className="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-100 border border-neutral-100 rounded-[3rem] overflow-hidden"
                                 >
@@ -270,12 +269,16 @@ const ProductDetails = () => {
                                     <SpecRow label="Warranty Tier" value="Premier Professional" />
                                 </motion.div>
                             )}
-                            {['shipping', 'support'].includes(activeTab) && (
-                                <motion.div 
+                            {activeTab === 'support' && (
+                                <motion.div
                                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                                    className="text-center py-20 bg-neutral-50 rounded-[3rem] border border-neutral-100"
+                                    className="text-center py-20 bg-neutral-50 rounded-[3rem] border border-neutral-100 px-6"
                                 >
-                                    <p className="text-neutral-400 text-lg font-light italic">Documentation for {activeTab} currently being indexed...</p>
+                                    <h4 className="text-xl font-bold text-neutral-900 mb-4 uppercase tracking-tight">Need Assistance?</h4>
+                                    <p className="text-neutral-500 mb-8 max-w-md mx-auto">Our technical concierge team is available to help with your inquiries and product support.</p>
+                                    <Link to="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-neutral-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-brand-600 transition-all shadow-xl shadow-neutral-900/10">
+                                        Contact Support <ArrowRight size={16} />
+                                    </Link>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -293,9 +296,9 @@ const ProductDetails = () => {
                             {relatedProducts.map((relProduct) => (
                                 <Link key={relProduct.id} to={`/product/${relProduct.slug}`} className="group bg-white rounded-[3rem] border border-neutral-100 overflow-hidden hover:shadow-2xl transition-all duration-700">
                                     <div className="aspect-[4/5] bg-neutral-50 p-10 flex items-center justify-center overflow-hidden">
-                                        <img 
-                                            src={relProduct.image_url?.startsWith('http') ? relProduct.image_url : `/products/${relProduct.image_url}`} 
-                                            alt={relProduct.name} 
+                                        <img
+                                            src={relProduct.image_url?.startsWith('http') ? relProduct.image_url : `/products/${relProduct.image_url}`}
+                                            alt={relProduct.name}
                                             className="w-full h-full object-contain mix-blend-multiply transition-transform duration-[2000ms] group-hover:scale-110"
                                         />
                                     </div>

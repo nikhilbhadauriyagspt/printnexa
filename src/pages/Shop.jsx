@@ -16,10 +16,23 @@ const Shop = () => {
     const location = useLocation();
     const navigate = useNavigate();
     
+    // Static Categories Fallback
+    const staticCategories = [
+        {id: 8, name: "All-In-One Printers", slug: "all-in-one-printers", image: "All-In-One.jpg"},
+        {id: 6, name: "Dot Matrix Printers", slug: "dot-matrix-printers", image: "Dot Matrix.jpg"},
+        {id: 2, name: "Inkjet Printers", slug: "inkjet-printers", image: "Inkjet.jpg"},
+        {id: 10, name: "Large Format Printers", slug: "large-format-printers", image: "Large-Format.jpg"},
+        {id: 5, name: "Laser Printers", slug: "laser-printers", image: "Laser.jpg"},
+        {id: 3, name: "LED Printers", slug: "led-printers", image: "LED.jpg"},
+        {id: 9, name: "Printer Accessories", slug: "printer-accessories", image: "Printer-as.jpg"},
+        {id: 4, name: "Supertank Printers", slug: "supertank-printers", image: "Supertank.jpg"},
+        {id: 7, name: "Thermal Printers", slug: "thermal-printers", image: "Thermal.jpg"}
+    ];
+
     // State
     const [priceRange, setPriceRange] = useState(100000);
     const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState(staticCategories);
     const [loading, setLoading] = useState(true);
     const [categorySEO, setCategorySEO] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,6 +41,71 @@ const Shop = () => {
     const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('search') || '');
     const [selectedCategory, setSelectedCategory] = useState(new URLSearchParams(location.search).get('category') || 'All');
     const [sortBy, setSortBy] = useState('newest');
+    
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 12;
+
+    const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
+    const [debouncedPrice, setDebouncedPrice] = useState(priceRange);
+
+    const fetchProducts = async () => {
+        try {
+            if (products.length === 0) setLoading(true);
+            
+            const params = new URLSearchParams();
+            if (selectedCategory !== 'All') params.append('category', selectedCategory);
+            if (debouncedSearch) params.append('search', debouncedSearch);
+            if (debouncedPrice < 100000) params.append('maxPrice', debouncedPrice);
+            if (sortBy) params.append('sort', sortBy);
+            
+            const res = await api.get(`/products?${params.toString()}`);
+            setProducts(res.data);
+        } catch (error) {
+            console.error("Failed to fetch products", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Initial Load Priority
+    useEffect(() => {
+        // 1. Fetch Products Immediately
+        fetchProducts();
+
+        // 2. Fetch Categories in background with delay
+        const timer = setTimeout(() => {
+            api.get('/categories').then(res => {
+                if (res.data && res.data.length > 0) setCategories(res.data);
+            }).catch(() => {});
+        }, 800);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Filter changes (excluding mount)
+    useEffect(() => {
+        const isInitialMount = products.length === 0 && loading;
+        if (!isInitialMount) {
+            fetchProducts();
+        }
+    }, [selectedCategory, debouncedSearch, debouncedPrice, sortBy]);
+
+    // Reset page when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedCategory, debouncedSearch, debouncedPrice, sortBy]);
+
+    // Pagination Logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(products.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     useEffect(() => {
         if (selectedCategory !== 'All') {
@@ -37,39 +115,6 @@ const Shop = () => {
             setCategorySEO(null);
         }
     }, [selectedCategory, categories]);
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                setLoading(true);
-                const params = new URLSearchParams();
-                if (selectedCategory !== 'All') params.append('category', selectedCategory);
-                if (searchTerm) params.append('search', searchTerm);
-                if (priceRange < 100000) params.append('maxPrice', priceRange);
-                if (sortBy) params.append('sort', sortBy);
-                
-                const res = await api.get(`/products?${params.toString()}`);
-                setProducts(res.data);
-            } catch (error) {
-                console.error("Failed to fetch products", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProducts();
-    }, [selectedCategory, searchTerm, priceRange, sortBy]);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const catRes = await api.get('/categories');
-                setCategories(catRes.data);
-            } catch (error) {
-                console.error("Failed to fetch categories", error);
-            }
-        };
-        fetchCategories();
-    }, []);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -122,12 +167,12 @@ const Shop = () => {
                 </div>
             </header>
 
-            <div className="container mx-auto px-6 py-12">
-                <div className="flex flex-col lg:flex-row gap-12 items-start">
+            <div className="container mx-auto px-4 md:px-6 py-12">
+                <div className="flex flex-col lg:flex-row gap-8 items-start">
                     
                     {/* --- MODERN SIDEBAR --- */}
-                    <aside className={`fixed inset-0 z-[100] lg:sticky lg:top-32 lg:z-0 lg:w-72 lg:h-auto bg-white lg:bg-transparent lg:inset-auto transition-all duration-500 lg:block ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
-                        <div className="h-full overflow-y-auto lg:overflow-visible bg-white lg:bg-transparent p-8 lg:p-0">
+                    <aside className={`fixed inset-0 z-[100] lg:sticky lg:top-32 lg:z-0 lg:w-64 lg:h-auto bg-white lg:bg-transparent lg:inset-auto transition-all duration-500 lg:block ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+                        <div className="h-full overflow-y-auto lg:overflow-visible bg-white lg:bg-transparent p-6 lg:p-0">
                             
                             {/* Mobile Close */}
                             <div className="flex lg:hidden justify-between items-center mb-10">
@@ -136,24 +181,24 @@ const Shop = () => {
                             </div>
 
                             {/* Search Block */}
-                            <div className="mb-10">
+                            <div className="mb-8">
                                 <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Identify Product</h4>
                                 <div className="relative group">
                                     <input 
                                         type="text" 
-                                        placeholder="Search by name..." 
-                                        className="w-full bg-white border border-slate-200 px-5 py-3.5 rounded-2xl text-sm font-medium focus:border-brand-600 outline-none transition-all shadow-sm"
+                                        placeholder="Search..." 
+                                        className="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-sm font-medium focus:border-brand-600 outline-none transition-all shadow-sm"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
-                                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-600 transition-colors" size={16} />
+                                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-600 transition-colors" size={14} />
                                 </div>
                             </div>
 
                             {/* Category List */}
-                            <div className="mb-10">
+                            <div className="mb-8">
                                 <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Categories</h4>
-                                <div className="space-y-1 bg-white border border-slate-200 rounded-3xl p-2 shadow-sm">
+                                <div className="space-y-1 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-sm">
                                     <CategoryButton 
                                         label="All Inventory" 
                                         isActive={selectedCategory === 'All'} 
@@ -173,20 +218,20 @@ const Shop = () => {
                             </div>
 
                             {/* Price Block */}
-                            <div className="mb-10 bg-white border border-slate-200 p-6 rounded-[2rem] shadow-sm">
-                                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">Price Limit</h4>
+                            <div className="mb-8 bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Price Limit</h4>
                                 <input 
                                     type="range" min="0" max="100000" step="1000"
                                     value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
-                                    className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand-600 mb-4"
+                                    className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand-600 mb-3"
                                 />
                                 <div className="flex justify-between items-center">
-                                    <span className="text-slate-400 text-xs font-bold">$0</span>
-                                    <span className="text-brand-600 text-sm font-black tracking-tight">${priceRange}</span>
+                                    <span className="text-slate-400 text-[10px] font-bold">$0</span>
+                                    <span className="text-brand-600 text-xs font-black tracking-tight">${priceRange}</span>
                                 </div>
                             </div>
 
-                            <button onClick={clearAllFilters} className="w-full py-4 border-2 border-slate-200 text-slate-400 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:border-brand-600 hover:text-brand-600 transition-all duration-300">
+                            <button onClick={clearAllFilters} className="w-full py-3.5 border-2 border-slate-200 text-slate-400 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:border-brand-600 hover:text-brand-600 transition-all duration-300">
                                 Reset Filters
                             </button>
                         </div>
@@ -232,7 +277,7 @@ const Shop = () => {
                                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                                     className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-10"
                                 >
-                                    {products.map((product) => (
+                                    {currentProducts.map((product) => (
                                         <ShopProductCard key={product.id} product={product} />
                                     ))}
                                 </motion.div>
@@ -245,6 +290,43 @@ const Shop = () => {
                                 </div>
                             )}
                         </AnimatePresence>
+
+                        {/* Pagination Controls */}
+                        {totalPages > 1 && (
+                            <div className="mt-16 flex justify-center items-center gap-2">
+                                <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    className="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-400 hover:border-brand-600 hover:text-brand-600 disabled:opacity-30 disabled:hover:border-slate-200 disabled:hover:text-slate-400 transition-all"
+                                >
+                                    <ChevronRight size={18} className="rotate-180" />
+                                </button>
+                                
+                                <div className="flex items-center gap-2">
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            onClick={() => handlePageChange(i + 1)}
+                                            className={`w-10 h-10 rounded-xl font-bold text-xs transition-all ${
+                                                currentPage === i + 1
+                                                    ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20'
+                                                    : 'bg-white border border-slate-200 text-slate-400 hover:border-brand-600 hover:text-brand-600'
+                                            }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    className="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-400 hover:border-brand-600 hover:text-brand-600 disabled:opacity-30 disabled:hover:border-slate-200 disabled:hover:text-slate-400 transition-all"
+                                >
+                                    <ChevronRight size={18} />
+                                </button>
+                            </div>
+                        )}
 
                     </main>
                 </div>

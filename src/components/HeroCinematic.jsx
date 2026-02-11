@@ -112,7 +112,7 @@ const HeroCinematic = () => {
                     <div className="relative z-20 h-full container mx-auto px-8 flex items-center">
                         <div className="max-w-3xl">
                             {/* HP AUTHORIZED PARTNER BADGE - BANNER */}
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.1 }}
