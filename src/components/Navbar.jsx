@@ -122,7 +122,7 @@ const Navbar = () => {
                                 <img
                                     src={branding.logo_url || '/logo/primefixlogo.png'}
                                     alt={branding.name}
-                                    className="h-14 w-auto"
+                                    className="h-8 w-auto"
                                     onError={(e) => { e.target.src = '/logo/primefixlogo.png'; }}
                                 />
                             </Link>
