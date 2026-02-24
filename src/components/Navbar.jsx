@@ -296,9 +296,8 @@ const Navbar = () => {
                                     <div className="flex flex-col">
                                         <div className="flex items-center gap-1.5">
                                             <span className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse"></span>
-                                            <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none">Official</span>
+                                            <span className="text-[11px] font-black text-slate-900 uppercase tracking-[0.1em] mt-0.5">HP Authorized Partner</span>
                                         </div>
-                                        <span className="text-[11px] font-black text-slate-900 uppercase tracking-[0.1em] mt-0.5">HP Authorized Partner</span>
                                     </div>
                                 </div>
                             </div>

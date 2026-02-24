@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 const HeroCinematic = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
+    const [currentSlide, setCurrentSlide] = useState(2);
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
 
@@ -49,6 +49,8 @@ const HeroCinematic = () => {
         }
     ];
 
+    // Auto-sliding disabled as per user request
+    /*
     useEffect(() => {
         const timer = setInterval(() => {
             setProgress((prev) => {
@@ -61,6 +63,7 @@ const HeroCinematic = () => {
         }, 30);
         return () => clearInterval(timer);
     }, [slides.length]);
+    */
 
     return (
         <section className="relative w-full h-[80vh] min-h-[600px] bg-white overflow-hidden">
@@ -122,7 +125,7 @@ const HeroCinematic = () => {
                                     <img src="/logo/hp-logo.png" alt="HP Logo" className="w-full h-full object-contain" />
                                 </div>
                                 <div className="flex flex-col leading-none">
-                                    <span className="text-slate-900 text-[10px] font-black uppercase tracking-[0.2em]">HP AUTHORIZED</span>
+                                    <span className="text-slate-900 text-[10px] font-black uppercase tracking-[0.2em]">HP Authorized</span>
                                     <span className="text-brand-600 text-[10px] font-black uppercase tracking-[0.2em] mt-1">PARTNER</span>
                                 </div>
                             </motion.div>
