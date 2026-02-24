@@ -13,7 +13,7 @@ const Footer = () => {
         name: 'Prime Fix Solutions',
         contact_email: 'info@primefixsolutions.shop',
         contact_address: '3014 Dauphine st ste A PM3 357287 New Orleans, Louisiana 70117-6755 US',
-        phone: '+1-402-508-9751',
+        phone: '+1 (402) 503-5801',
         logo_url: '/logo/primefixlogo.png'
     });
     const [email, setEmail] = useState('');

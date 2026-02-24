@@ -48,7 +48,7 @@ const TermsAndConditions = () => {
                             Prime Fix Solutions is your trusted destination for authentic, high-performance printers and printing accessories from HP and other leading technology brands.
                         </p>
                         <p>
-                            You can contact us by phone at 00000000000, email at <a href="mailto:info@primefixsolutions.shop" className="text-brand-600 font-bold">info@primefixsolutions.shop</a>, or by mail to 3014 Dauphine st ste A PM3 357287, New Orleans, LA 70117, United States.
+                            You can contact us by phone at +1 (402) 503-5801, email at <a href="mailto:info@primefixsolutions.shop" className="text-brand-600 font-bold">info@primefixsolutions.shop</a>, or by mail to 3014 Dauphine st ste A PM3 357287, New Orleans, LA 70117, United States.
                         </p>
                         <p>
                             These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you"), and PrimeFix Solutions LLC, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. <strong>IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</strong>
@@ -250,7 +250,7 @@ const TermsAndConditions = () => {
                                 <p>3014 Dauphine st ste A PM3 357287</p>
                                 <p>New Orleans, LA 70117</p>
                                 <p>United States</p>
-                                <p className="pt-4 flex items-center gap-3 text-brand-600"><Phone size={16} /> 00000000000</p>
+                                <p className="pt-4 flex items-center gap-3 text-brand-600"><Phone size={16} /> +1 (402) 503-5801</p>
                                 <p className="flex items-center gap-3 text-brand-600"><Mail size={16} /> info@primefixsolutions.shop</p>
                             </address>
                         </div>
