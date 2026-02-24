@@ -298,7 +298,7 @@ const Navbar = () => {
                                         <Phone size={14} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-0.5">Expert Support</span>
+                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-0.5">Contact Us</span>
                                         <span className="text-xs font-black text-slate-900 group-hover:text-brand-600 transition-colors">{branding.phone}</span>
                                     </div>
                                 </a>
