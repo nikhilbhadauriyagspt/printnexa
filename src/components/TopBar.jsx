@@ -39,12 +39,13 @@ const TopBar = () => {
                     </div>
 
                     {/* Right: Contact & Language */}
-                    <div className="hidden md:flex items-center gap-6 text-[10px] font-bold">
-                        <a href={`tel:${branding.phone}`} className="text-slate-300 hover:text-white transition-colors">
+                    <div className="hidden md:flex items-center gap-6 text-[11px] font-black">
+                        <a href={`tel:${branding.phone}`} className="text-white hover:text-brand-400 transition-colors flex items-center gap-2">
+                            <Phone size={12} className="text-brand-400" />
                             {branding.phone}
                         </a>
                         <div className="w-[1px] h-3 bg-slate-700"></div>
-                        <a href={`mailto:${branding.contact_email}`} className="text-slate-300 hover:text-white transition-colors uppercase tracking-widest">
+                        <a href={`mailto:${branding.contact_email}`} className="text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px]">
                             Support
                         </a>
                     </div>

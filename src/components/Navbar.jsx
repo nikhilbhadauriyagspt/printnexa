@@ -39,6 +39,7 @@ const Navbar = () => {
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
     const [branding, setBranding] = useState({
         name: 'Prime Fix Solutions',
+        phone: '+1 (402) 503-5801',
         logo_url: '/logo/primefixlogo.png' // Default static logo
     });
 
@@ -104,6 +105,9 @@ const Navbar = () => {
                                 <MobileLink to="/products" icon={<Layers size={20} />} label="All Products" onClick={() => setIsMenuOpen(false)} />
                                 <MobileLink to="/about" icon={<User size={20} />} label="About Us" onClick={() => setIsMenuOpen(false)} />
                                 <MobileLink to="/contact" icon={<MapPin size={20} />} label="Find Us" onClick={() => setIsMenuOpen(false)} />
+                                <a href={`tel:${branding.phone}`} className="flex items-center gap-4 p-4 rounded-2xl text-base font-bold text-brand-600 bg-brand-50 mt-10">
+                                    <Phone size={20} /> {branding.phone}
+                                </a>
                             </nav>
                         </motion.div>
                     </motion.div>
@@ -287,8 +291,18 @@ const Navbar = () => {
                                 <NavLink to="/contact" label="Contact" active={location.pathname === '/contact'} />
                             </nav>
 
-                            {/* Right Side: HP Authorized Badge */}
-                            <div className="flex justify-end items-center">
+                            {/* Right Side: Contact & HP Authorized Badge */}
+                            <div className="flex justify-end items-center gap-6">
+                                <a href={`tel:${branding.phone}`} className="hidden xl:flex items-center gap-2 group">
+                                    <div className="w-8 h-8 bg-brand-50 rounded-full flex items-center justify-center text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                                        <Phone size={14} />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-0.5">Expert Support</span>
+                                        <span className="text-xs font-black text-slate-900 group-hover:text-brand-600 transition-colors">{branding.phone}</span>
+                                    </div>
+                                </a>
+
                                 <div className="flex items-center gap-4 bg-slate-100 border border-slate-200 pl-2 pr-6 py-2 rounded-full">
                                     <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1.5 shadow-sm">
                                         <img src="/logo/hp-logo.png" alt="HP Logo" className="w-full h-full object-contain" />
